@@ -51,8 +51,17 @@ welcome.page.ts | 组件的类（class）代码
 welcome.routing.ts | 路由模块文件
 welcome.module>ts | 模块文件
 
+```bash
+ionic g module
 
+ionic g guard
+```
 
+创建service
+```bash
+ionic g service <service_name> // service name 严格按照驼峰
+ionic g service localStorage
+```
 
 ## cordova
 
