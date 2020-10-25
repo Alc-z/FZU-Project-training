@@ -63,6 +63,13 @@ ionic g service <service_name> // service name 严格按照驼峰
 ionic g service localStorage
 ```
 
+创建页面
+```bash
+ionic generate page pages/welcome
+# or
+ionic g page welcome
+```
+
 ## cordova
 
 项目添加平台

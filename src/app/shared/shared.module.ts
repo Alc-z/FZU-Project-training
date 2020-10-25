@@ -1,3 +1,5 @@
+import { IonicModule } from '@ionic/angular';
+import { FormsModule } from '@angular/forms';
 import { LocalStorageService } from './local-storage.service';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -10,7 +12,14 @@ import { CommonModule } from '@angular/common';
     LocalStorageService
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    FormsModule,
+    IonicModule
+  ],
+  exports: [
+    CommonModule,
+    FormsModule,
+    IonicModule
   ]
 })
 export class SharedModule { }

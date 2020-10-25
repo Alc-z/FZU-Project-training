@@ -18,6 +18,10 @@ const routes: Routes = [
     // loadChildren: () => import('./pages/welcome/welcome.module').then( m => m.WelcomePageModule),
     loadChildren: './pages/welcome/welcome.module#WelcomePageModule',
     canActivate: [StartAppGuard]
+  },
+  {
+    path: 'passport',
+    loadChildren: () => import('./pages/passport/passport.module').then( m => m.PassportModule)
   }
 ];
 
