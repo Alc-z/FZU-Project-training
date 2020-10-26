@@ -8,3 +8,13 @@ hr {
 .full-width {
     width: 100%;
 }
+ion-toolbar {
+    --no-border: true;
+    --border-width: 0;
+    --min-height: 50px;
+}
+
+ion-item {
+    --no-border: true;
+    --border-width: 0;
+}
