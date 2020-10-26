@@ -1,3 +1,4 @@
+import { element } from 'protractor';
 import { AuthenticationCodeService } from './../authentication-code.service';
 import { IonSlides } from '@ionic/angular';
 import { Component, OnInit, ViewChild } from '@angular/core';
@@ -29,7 +30,7 @@ export class SignupPage implements OnInit {
   constructor(private authenticationCodeService: AuthenticationCodeService) { }
 
   ngOnInit() {
-    // this.signupSlides.lockSwipes(true);
+    // this.signupSlides.lockSwipeToNext(true);
   }
   onNext() {
     this.signupSlides.slideNext();
@@ -58,6 +59,8 @@ export class SignupPage implements OnInit {
     this.validated = this.authenticationCodeService.validate(this.signup.code);
     console.log('validated:' + this.validated);
   }
+
+
 
   isActive(index: number): boolean {
     return this.slideIndex === index;

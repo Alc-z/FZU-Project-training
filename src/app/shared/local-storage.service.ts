@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { exception } from 'console';
 
 @Injectable({
   providedIn: 'root' // root所有模块都能用到，相当于不需要import
@@ -33,7 +32,7 @@ export class LocalStorageService {
 
   set(key: string, value: any): void {
     if (key === null || key === '') {
-      throw new exception('invalid key');
+      throw new Error('invalid key');
     }
     // 将 JavaScript 值转换为 JSON 字符串
     this.storage.setItem(key, JSON.stringify(value));
@@ -41,7 +40,7 @@ export class LocalStorageService {
 
   remove(key: string): void {
     if (key === null || key === '') {
-      throw new exception('invalid key');
+      throw new Error('invalid key');
     }
     this.storage.removeItem(key);
   }
