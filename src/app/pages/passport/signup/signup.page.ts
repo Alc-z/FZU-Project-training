@@ -1,3 +1,4 @@
+import { PassportService } from './../passport.service';
 import { element } from 'protractor';
 import { AuthenticationCodeService } from './../authentication-code.service';
 import { IonSlides } from '@ionic/angular';
@@ -14,10 +15,12 @@ export class SignupPage implements OnInit {
     // 字符串'signupSlides'和模板中的#signupSlides引用变量的名称一致
     @ViewChild('signupSlides', { static: false }) signupSlides: IonSlides;
     slideIndex = 0;
-    submited: boolean;
-    validated: boolean;
+    phoneUnique: boolean;
+    submited: boolean; // phone submit
+    validated: boolean; // 用在验证码
     validateCode: string;
     pwStateTips: string;
+
 
     signup: Signup = {
         phone: '',
@@ -36,16 +39,29 @@ export class SignupPage implements OnInit {
         disable: true
     };
 
-    constructor(private authenticationCodeService: AuthenticationCodeService) { }
+    constructor(private authenticationCodeService: AuthenticationCodeService, private passportService: PassportService) { }
 
     ngOnInit() {
         // this.signupSlides.lockSwipeToNext(true);
     }
+
+    ngAfterViewInit() {
+        this.signupSlides.lockSwipeToNext(true);
+    }
+
+    ionViewDidEnter() {
+
+    }
+
     onNext() {
+        this.signupSlides.lockSwipeToNext(false);
         this.signupSlides.slideNext();
+        this.signupSlides.lockSwipeToNext(true);
     }
     onPrevious() {
+        this.signupSlides.lockSwipeToNext(false);
         this.signupSlides.slidePrev();
+        this.signupSlides.lockSwipeToNext(true);
     }
 
     onSlideDidChange() {
@@ -85,13 +101,10 @@ export class SignupPage implements OnInit {
         this.settime();
     }
 
-
-    onPhoneSubmit(form: NgForm) {
+    onSubmitPhone(form: NgForm) {
         this.submited = true;
-        if (form.valid) { // 已通过客户端验证
-            console.log('validateCode:' + this.validateCode);
-            console.log('object: ' + this.signup);
-            this.signupSlides.slideNext();
+        if (form.valid) { // 验证手机号
+            this.phoneUnique = this.passportService.isUniquePhone(this.signup.phone) ? true : false;
         }
     }
 
@@ -113,6 +126,11 @@ export class SignupPage implements OnInit {
             return;
         }
         console.log('state:' + this.pwStateTips);
+    }
+
+    onInfoSubmit(form: NgForm) {
+        this.passportService.addUser(this.signup);
+        this.onNext();
     }
 
     isActive(index: number): boolean {
