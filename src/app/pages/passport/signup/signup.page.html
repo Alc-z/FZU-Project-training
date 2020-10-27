@@ -143,13 +143,10 @@
 
                 <ion-item>
                     <ion-input required type="password" placeholder="请确认密码" [(ngModel)]="signup.confirmPassword"
-                        name="confirmPassword" #confirmPassword="ngModel" clearInput=true>
+                        name="confirmPassword" #confirmPassword="ngModel" clearInput=true (ionBlur)="onConfirmPassword()" (ionFocus)="pwStateTips = ''">
                     </ion-input>
-                    <ion-text class="ion-text-left" color="danger"
-                        *ngIf="(confirmPassword.touched)">
-                        <p [hidden]="!confirmPassword.errors?.required" class="padding-start">请输入验证密码</p>
-                        <p [hidden]="!(confirmPassword != '' && password.value == confirmPassword.value)" class="padding-start">两次输入密码不一致</p>
-                        <p [hidden]="!(confirmPassword != '' && password.value != confirmPassword.value)" class="padding-start">验证完成</p>
+                    <ion-text class="ion-text-left" color="danger" *ngIf="(confirmPassword.touched)">
+                        <p [hidden]="dirty" class="padding-start">{{ pwStateTips }}</p>
                     </ion-text>
                 </ion-item>
 
