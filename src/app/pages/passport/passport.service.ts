@@ -51,7 +51,7 @@ export class PassportService {
     }
 
     isUniquePhone(phone: string): boolean {
-        const userArr: User[] = this.localStorageService.get('User', new Array());
+        const userArr: User[] = this.localStorageService.get('User', []);
         userArr.forEach(item => {
             if (item.phone === phone) {
                 return false;

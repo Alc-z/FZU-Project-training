@@ -22,3 +22,29 @@ css
 ```html
 <p class="foo"></p>
 ```
+
+### 初始化对象
+user = {
+    id: 1,
+    phone: 132xxx
+}
+
+const user: User = new User()
+
+### 数组传参
+初始化数组
+```js
+function([])
+//or
+function(new Array())
+```
+
+### 数组操作
+
+```js
+// 添加元素
+arr.push()
+
+```
+
+
