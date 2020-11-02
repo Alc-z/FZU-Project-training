@@ -25,7 +25,7 @@
         <h4><span>{{s.current | number:'1.2-2'}}元</span></h4>
         <p>
           {{s.content}}
-          <span>
+          <span  [ngClass]="{'less-equal':s.current - s.previous > 0}">
             {{s.current - s.previous | number:'1.2-2'}}
           </span>&nbsp;
           <ion-icon name="arrow-round-up"></ion-icon>
@@ -41,7 +41,7 @@
         <h4><span>{{564.678 | number:'1.2-2'}}元</span></h4>
         <p>
           {{s.content}}
-          <span [ngClass]="{'less-equal':s.current - s.previous <= 0,'greater':s.current - s.previous > 0}">
+          <span [ngClass]="{'less-equal':s.current - s.previous <= 0, 'greater':s.current - s.previous > 0}">
             {{s.current - s.previous}}
           </span>&nbsp;
           <ng-container [ngSwitch]="minus(s.current, s.previous)">

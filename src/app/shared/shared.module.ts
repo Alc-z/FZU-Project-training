@@ -22,7 +22,8 @@ import { CommonModule } from '@angular/common';
   exports: [
     CommonModule,
     FormsModule,
-    IonicModule
+    IonicModule,
+    CopyrightComponent
   ]
 })
 export class SharedModule { }
