@@ -129,7 +129,7 @@ export class SignupPage implements OnInit {
     }
 
     onInfoSubmit(form: NgForm) {
-        this.passportService.addUser(this.signup);
+        this.passportService.signupUser(this.signup);
         this.onNext();
     }
 

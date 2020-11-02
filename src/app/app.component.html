@@ -13,6 +13,18 @@
             </ion-item>
           </ion-menu-toggle>
         </ion-list>
+<!-- 
+        <ion-list>
+          <ion-item color="medium">
+            <ion-label>
+              <ion-text>
+                <h2>{{shopName}}</h2>
+              </ion-text>
+              <p>{{phone}}</p>
+            </ion-label>
+            <ion-badge slot="end" color="primary">高级版</ion-badge>
+          </ion-item>
+        </ion-list> -->
 
         <ion-list id="labels-list">
           <ion-list-header>Labels</ion-list-header>
@@ -22,6 +34,13 @@
             <ion-label>{{ label }}</ion-label>
           </ion-item>
         </ion-list>
+
+        <ion-menu-toggle auto-hide="false">
+          <ion-button color="light" fill="clear">
+            <ion-icon slot="start" name='settings'></ion-icon>设置
+          </ion-button>
+        </ion-menu-toggle>
+      
       </ion-content>
     </ion-menu>
     <ion-router-outlet id="main-content"></ion-router-outlet>

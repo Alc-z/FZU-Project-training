@@ -55,8 +55,6 @@
                         <ion-input required placeholder="请输入您的手机号码" name="phone" type="name" [(ngModel)]="signup.phone"
                             #phone="ngModel" pattern="^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(18[0,3,5-9]))\d{8}$">
                         </ion-input>
-                        <!-- <ion-input required placeholder="请输入手机号码" name="phone" type="name" [(ngModel)]="signup.phone"
-                            #phone="ngModel"></ion-input> -->
                     </ion-item>
 
                     <ion-text color="danger" *ngIf="(phone.invalid && phone.touched) || submited">
@@ -136,16 +134,16 @@
                 </ion-item>
 
                 <ion-item>
-                    <ion-input required type="password" placeholder="请输入登入密码" [(ngModel)]="signup.password"
-                        name="password" #password="ngModel">
-                    </ion-input>
                     <!-- <ion-input required type="password" placeholder="请输入登入密码" [(ngModel)]="signup.password"
-                        name="password" #password="ngModel" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2, 3}$">
+                        name="password" #password="ngModel">
+                    </ion-input> -->
+                    <ion-input required type="password" placeholder="请输入登入密码" [(ngModel)]="signup.password"
+                        name="password" #password="ngModel" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,12}$">
                     </ion-input>
-                    <ion-text class="ion-text-left" color="danger" *ngIf="(email.invalid && email.touched)">
+                    <ion-text class="ion-text-left" color="danger" *ngIf="(password.invalid && password.touched)">
                         <p [hidden]="!password.errors?.required" class="padding-start">请输入登入密码</p>
                         <p [hidden]="!password.errors?.pattern" class="padding-start">密码格式错误</p>
-                    </ion-text> -->
+                    </ion-text>
                 </ion-item>
 
                 <ion-item>

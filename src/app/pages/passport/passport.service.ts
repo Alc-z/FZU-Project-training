@@ -1,3 +1,5 @@
+import { AjaxResult } from './../../shared/class/ajax-result';
+import { UserValidation } from './user-validation';
 import { element } from 'protractor';
 import { LoginAccount } from './LoginAccount';
 import { User } from './User';
@@ -15,21 +17,29 @@ export class PassportService {
     constructor(private localStorageService: LocalStorageService) {
     }
 
-    addUser(signup: Signup) {
-        const userArr: User[] = this.localStorageService.get('User', new Array());
-        this.id = userArr.length + 1;
-        console.log('id:' + this.id);
+    async signupUser(signup: Signup) {
+        if (this.isUniquePhone(signup.phone)) {
+            const userArr: User[] = this.localStorageService.get('User', new Array());
+            this.id = userArr.length + 1;
+            console.log('id:' + this.id);
 
-        const user = new User();
-        user.id = this.id;
-        user.phone = signup.phone;
-        user.email = signup.email;
-        user.createTime = new Date();
+            const user = new User();
+            user.id = this.id;
+            user.phone = signup.phone;
+            user.email = signup.email;
+            user.createTime = new Date();
 
-        userArr.push(user);
-        this.localStorageService.set('User', userArr);
+            userArr.push(user);
+            this.localStorageService.set('User', userArr);
 
-        this.addLoginAccount(signup, user);
+            this.addLoginAccount(signup, user);
+            return new AjaxResult(true, null);
+        } else {
+            return new AjaxResult(false, null, {
+                message: '您的手机号码已经被注册',
+                details: ''
+            });
+        }
     }
 
     insertUser(user: User) {
@@ -42,12 +52,6 @@ export class PassportService {
             throw new Error('id 超出范围');
         }
         return userArr[id];
-        // userArr.forEach(item => {
-        //     if (item.id === id) {
-        //         return item;
-        //     }
-        // });
-        // return null;
     }
 
     isUniquePhone(phone: string): boolean {
@@ -87,5 +91,12 @@ export class PassportService {
             }
         });
         return false;
+    }
+
+    async login(input: UserValidation) {
+        if (this.getLoginAccount(input.identifier)) {
+            return new AjaxResult(true, null);
+        }
+        return new AjaxResult(false, null, { message: '用户密码不正确', details: '' });
     }
 }

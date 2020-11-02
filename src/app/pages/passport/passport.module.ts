@@ -1,3 +1,4 @@
+import { LoginPage } from './login/login.page';
 import { SharedModule } from './../../shared/shared.module';
 import { SignupPage } from './signup/signup.page';
 import { NgModule } from '@angular/core';
@@ -10,7 +11,8 @@ import { BrowserModule } from '@angular/platform-browser';
 
 @NgModule({
   declarations: [
-    SignupPage
+    SignupPage,
+    LoginPage,
   ],
   imports: [
     // CommonModule,

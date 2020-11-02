@@ -47,4 +47,9 @@ arr.push()
 
 ```
 
-
+### 模板布局
+添加空的ion-item，当作空格，把组件距离拉开
+lines表示item是否有边
+```bash
+<ion-item lines="none"></ion-item>
+```
