@@ -1,3 +1,4 @@
+import { PassportService } from './../pages/passport/passport.service';
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -9,7 +10,7 @@ import { LocalStorageService } from '../shared/local-storage.service';
 })
 export class StartAppGuard implements CanActivate {
 
-  constructor(private localStorageService: LocalStorageService, private router: Router) { }
+  constructor(private localStorageService: LocalStorageService, private router: Router, private passprotService: PassportService) { }
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
 
     const appConfig: any = this.localStorageService.get(APP_KEY, {
@@ -22,7 +23,7 @@ export class StartAppGuard implements CanActivate {
       this.localStorageService.set(APP_KEY, appConfig);
       return true;
     } else {
-      this.router.navigateByUrl('home');
+      this.router.navigateByUrl('passport/login');
       return false;
     }
   }

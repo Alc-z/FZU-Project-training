@@ -83,20 +83,43 @@ export class PassportService {
         this.localStorageService.set('LoginAccount', loginAccountArr);
     }
 
-    getLoginAccount(identifier: string): boolean {
+    getLoginAccount(identifier: string): LoginAccount {
         const loginAccountArr: LoginAccount[] = this.localStorageService.get('LoginAccount', new Array());
+        let result: LoginAccount;
         loginAccountArr.forEach(item => {
             if (item.identifier === identifier) {
-                return true;
+                result = item;
+                return;
             }
         });
-        return false;
+        return result;
+    }
+
+    // 只存最新登入的一个用户
+    addUserValidation(userValidation: UserValidation) {
+        const result = this.localStorageService.get('UserValidation', null);
+        if (result == null || result.userId !== userValidation.userId) {
+            this.localStorageService.set('UserValidation', userValidation);
+            console.log('userValidation changed.');
+        }
+    }
+
+    getUserValidation(): UserValidation {
+        return this.localStorageService.get('UserValidation', null);
     }
 
     async login(input: UserValidation) {
-        if (this.getLoginAccount(input.identifier)) {
+        const loginAccount = this.getLoginAccount(input.identifier);
+        console.log('login acount:' + loginAccount);
+        if (loginAccount != null && loginAccount.credential === input.passworrdToken) {
+            input.userId = loginAccount.userId;
+            this.addUserValidation(input);
             return new AjaxResult(true, null);
         }
         return new AjaxResult(false, null, { message: '用户密码不正确', details: '' });
+    }
+
+    isExpired(): boolean {
+        return this.getUserValidation().date.getTime() - new Date().getTime() > 60 * 60 * 24 * 7;
     }
 }

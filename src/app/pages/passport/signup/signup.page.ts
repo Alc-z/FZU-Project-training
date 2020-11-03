@@ -1,7 +1,7 @@
 import { PassportService } from './../passport.service';
 import { element } from 'protractor';
 import { AuthenticationCodeService } from './../authentication-code.service';
-import { IonSlides } from '@ionic/angular';
+import { IonSlides, MenuController } from '@ionic/angular';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Signup } from '../signup';
 import { NgForm } from '@angular/forms';
@@ -39,7 +39,19 @@ export class SignupPage implements OnInit {
         disable: true
     };
 
-    constructor(private authenticationCodeService: AuthenticationCodeService, private passportService: PassportService) { }
+    constructor(
+        private authenticationCodeService: AuthenticationCodeService,
+        private passportService: PassportService,
+        private menuController: MenuController
+    ) { }
+
+    ionViewWillEnter() {
+        this.menuController.enable(false);
+    }
+
+    ionViewDidLeave() {
+        this.menuController.enable(true);
+    }
 
     ngOnInit() {
         // this.signupSlides.lockSwipeToNext(true);

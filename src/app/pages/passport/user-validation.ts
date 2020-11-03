@@ -1,8 +1,9 @@
 export class UserValidation {
     id: number;
     userId: number;
-    type: number;
-    thirdParty: number;
+    type: boolean;
+    thirdParty: string;
     identifier: string;
     passworrdToken: string;
+    date: Date;
 }
