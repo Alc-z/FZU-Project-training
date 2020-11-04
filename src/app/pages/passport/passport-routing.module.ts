@@ -1,3 +1,4 @@
+import { ForgotPasswordPage } from './forgot-password/forgot-password.page';
 import { LoginPage } from './login/login.page';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
@@ -11,6 +12,10 @@ const routes: Routes = [
   {
     path: 'login',
     component: LoginPage
+  },
+  {
+    path: 'forgot-password',
+    component: ForgotPasswordPage
   }
 ];
 

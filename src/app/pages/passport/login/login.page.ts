@@ -1,3 +1,4 @@
+import { LocalStorageService } from './../../../shared/local-storage.service';
 import { Router } from '@angular/router';
 import { UserValidation } from './../user-validation';
 import { AjaxResult } from './../../../shared/class/ajax-result';
@@ -59,7 +60,7 @@ export class LoginPage implements OnInit {
         const userValidation = new UserValidation();
         userValidation.identifier = this.login.identifier;
         userValidation.passworrdToken = this.login.password;
-        userValidation.date = new Date();
+        userValidation.date = new Date().valueOf().toString();
 
 
         this.passportService.login(userValidation).then((ajaxResult) => {
@@ -82,10 +83,14 @@ export class LoginPage implements OnInit {
 
     // 点击忘记密码时调用
     onForgotPassword() {
-        // 进入找回密码页面
+        this.router.navigateByUrl('passport/forgot-password');
     }
 
     ngOnInit() {
+        if (!this.passportService.isExpired()) {
+            this.passportService.login(this.passportService.getUserValidation());
+            this.router.navigateByUrl('/home');
+        }
     }
 
 }

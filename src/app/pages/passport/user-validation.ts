@@ -5,5 +5,5 @@ export class UserValidation {
     thirdParty: string;
     identifier: string;
     passworrdToken: string;
-    date: Date;
+    date: string;
 }

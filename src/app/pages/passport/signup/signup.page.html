@@ -138,7 +138,8 @@
                         name="password" #password="ngModel">
                     </ion-input> -->
                     <ion-input required type="password" placeholder="请输入登入密码" [(ngModel)]="signup.password"
-                        name="password" #password="ngModel" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,12}$">
+                        name="password" #password="ngModel"
+                        pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,12}$">
                     </ion-input>
                     <ion-text class="ion-text-left" color="danger" *ngIf="(password.invalid && password.touched)">
                         <p [hidden]="!password.errors?.required" class="padding-start">请输入登入密码</p>
@@ -155,13 +156,13 @@
                         <p [hidden]="dirty" class="padding-start">{{ pwStateTips }}</p>
                     </ion-text>
                 </ion-item>
-            
+
                 <ion-item>
                     <ion-button class="full-width" expand="full" color="primary" (click)="onPrevious()">上一步</ion-button>
                 </ion-item>
 
                 <ion-item>
-                    <ion-button class="full-width" expand="full" color="primary" type="submit" >下一步</ion-button>
+                    <ion-button class="full-width" expand="full" color="primary" type="submit">下一步</ion-button>
                 </ion-item>
             </form>
         </ion-slide>
@@ -170,6 +171,9 @@
             <ion-item>
                 <ion-text>
                     <h3>注册成功</h3>
+                    <ion-button href="/passport/login" class="full-width" expand="full" color="primary">
+                        完成
+                    </ion-button>
                 </ion-text>
             </ion-item>
         </ion-slide>

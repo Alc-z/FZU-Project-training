@@ -97,11 +97,7 @@ export class PassportService {
 
     // 只存最新登入的一个用户
     addUserValidation(userValidation: UserValidation) {
-        const result = this.localStorageService.get('UserValidation', null);
-        if (result == null || result.userId !== userValidation.userId) {
-            this.localStorageService.set('UserValidation', userValidation);
-            console.log('userValidation changed.');
-        }
+        this.localStorageService.set('UserValidation', userValidation);
     }
 
     getUserValidation(): UserValidation {
@@ -110,9 +106,10 @@ export class PassportService {
 
     async login(input: UserValidation) {
         const loginAccount = this.getLoginAccount(input.identifier);
-        console.log('login acount:' + loginAccount);
+
         if (loginAccount != null && loginAccount.credential === input.passworrdToken) {
             input.userId = loginAccount.userId;
+            input.date = new Date().getTime().toString();
             this.addUserValidation(input);
             return new AjaxResult(true, null);
         }
@@ -120,6 +117,9 @@ export class PassportService {
     }
 
     isExpired(): boolean {
-        return this.getUserValidation().date.getTime() - new Date().getTime() > 60 * 60 * 24 * 7;
+        const logDate = parseInt(this.getUserValidation().date);
+        const current = new Date().getTime();
+        // console.log('time:', (current - logDate) / (60 * 60 * 24 * 1000));
+        return (current - logDate) / (60 * 60 * 24 * 1000) > 5;
     }
 }
