@@ -5,7 +5,7 @@ import { LoginAccount } from './LoginAccount';
 import { User } from './User';
 import { Signup } from './signup';
 import { Injectable } from '@angular/core';
-import { LocalStorageService } from 'src/app/shared/local-storage.service';
+import { LocalStorageService } from 'src/app/shared/services/local-storage.service';
 
 @Injectable({
     providedIn: 'root'
@@ -117,7 +117,11 @@ export class PassportService {
     }
 
     isExpired(): boolean {
-        const logDate = parseInt(this.getUserValidation().date);
+        const userValidation = this.getUserValidation();
+        if (userValidation === null) {
+            return true;
+        }
+        const logDate = parseInt(userValidation.date);
         const current = new Date().getTime();
         // console.log('time:', (current - logDate) / (60 * 60 * 24 * 1000));
         return (current - logDate) / (60 * 60 * 24 * 1000) > 5;

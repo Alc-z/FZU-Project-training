@@ -1,10 +1,11 @@
 import { PassportService } from './../passport.service';
 import { element } from 'protractor';
 import { AuthenticationCodeService } from './../authentication-code.service';
-import { IonSlides, MenuController } from '@ionic/angular';
+import { AlertController, IonSlides, MenuController, ToastController } from '@ionic/angular';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Signup } from '../signup';
 import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-signup',
@@ -17,10 +18,8 @@ export class SignupPage implements OnInit {
     slideIndex = 0;
     phoneUnique: boolean;
     submited: boolean; // phone submit
-    validated: boolean; // 用在验证码
     validateCode: string;
     pwStateTips: string;
-
 
     signup: Signup = {
         phone: '',
@@ -42,7 +41,10 @@ export class SignupPage implements OnInit {
     constructor(
         private authenticationCodeService: AuthenticationCodeService,
         private passportService: PassportService,
-        private menuController: MenuController
+        private router: Router,
+        private menuController: MenuController,
+        private toastCtrl: ToastController,
+        // private alertCtrl: AlertController
     ) { }
 
     ionViewWillEnter() {
@@ -54,6 +56,7 @@ export class SignupPage implements OnInit {
     }
 
     ngOnInit() {
+        // this.signupSlides.lockSwipes(true);
         // this.signupSlides.lockSwipeToNext(true);
     }
 
@@ -75,37 +78,28 @@ export class SignupPage implements OnInit {
         this.signupSlides.slidePrev();
         this.signupSlides.lockSwipeToNext(true);
     }
-
     onSlideDidChange() {
         this.signupSlides.getActiveIndex().then((index) => {
             this.slideIndex = index;
         });
     }
-
-    // 倒计时
-    settime() {
-        if (this.verifyCode.countdown === 1) {
-            this.verifyCode.countdown = 60;
-            this.verifyCode.verifyCodeTips = '获取验证码';
-            this.verifyCode.disable = true;
+    /**
+     * 验证手机号
+     * @param form 
+     */
+    onSubmitPhone(form: NgForm) {
+        this.submited = true;
+        if (form.valid) { // 验证手机号是否使用过
+            this.phoneUnique = this.passportService.isUniquePhone(this.signup.phone) ? true : false;
             return;
-        } else {
-            this.verifyCode.countdown--;
         }
-
-        this.verifyCode.verifyCodeTips = '重新获取(' + this.verifyCode.countdown + ')';
-        setTimeout(() => {
-            this.verifyCode.verifyCodeTips = '重新获取(' + this.verifyCode.countdown + ')';
-            this.settime();
-        }, 1000);
+        this.onNext();
     }
 
-    onValidateCode(form: NgForm) {
-        this.validated = this.authenticationCodeService.validate(this.signup.code);
-        console.log('validated:' + this.validated);
-    }
-
-    getCode() {
+    /**
+     * 生产验证码
+     */
+    async getCode() {
         this.verifyCode.code = this.authenticationCodeService.createCode(4, 10);
         console.log('code:' + this.verifyCode.code);
         // 发送验证码成功后开始倒计时
@@ -113,10 +107,30 @@ export class SignupPage implements OnInit {
         this.settime();
     }
 
-    onSubmitPhone(form: NgForm) {
-        this.submited = true;
-        if (form.valid) { // 验证手机号
-            this.phoneUnique = this.passportService.isUniquePhone(this.signup.phone) ? true : false;
+    // onValidateCode(form: NgForm) {
+    //     this.validated = this.authenticationCodeService.validate(this.signup.code);
+    //     console.log('validated:' + this.validated);
+    // }
+
+
+    /*
+    * 检验验证码
+    */
+    async checkCode() {
+        console.log(this.verifyCode);
+        if (this.signup.code == null || this.signup.code === '') {
+            const toast = await this.toastCtrl.create({
+                message: '输入不能为空',
+                duration: 3000
+            });
+            toast.present();
+        } else {
+            if (this.authenticationCodeService.validate(this.signup.code)) {
+                this.onNext();
+                this.verifyCode.fail = false;
+            } else {
+                this.verifyCode.fail = true;
+            }
         }
     }
 
@@ -139,6 +153,32 @@ export class SignupPage implements OnInit {
         }
         console.log('state:' + this.pwStateTips);
     }
+
+
+    finishSignup() {
+        this.router.navigateByUrl('/login');
+    }
+
+    // 倒计时
+    settime() {
+        if (this.verifyCode.countdown === 1) {
+            this.verifyCode.countdown = 60;
+            this.verifyCode.verifyCodeTips = '获取验证码';
+            this.verifyCode.disable = true;
+            return;
+        } else {
+            this.verifyCode.countdown--;
+        }
+
+        this.verifyCode.verifyCodeTips = '重新获取(' + this.verifyCode.countdown + ')';
+        setTimeout(() => {
+            this.verifyCode.verifyCodeTips = '重新获取(' + this.verifyCode.countdown + ')';
+            this.settime();
+        }, 1000);
+    }
+
+    
+    
 
     onInfoSubmit(form: NgForm) {
         this.passportService.signupUser(this.signup);

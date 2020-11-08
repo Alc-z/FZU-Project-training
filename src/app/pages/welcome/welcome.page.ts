@@ -1,9 +1,10 @@
-import { LocalStorageService } from './../../shared/local-storage.service';
+import { LocalStorageService } from './../../shared/services/local-storage.service';
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { IonSlide, IonSlides } from '@ionic/angular';
 import { Router } from '@angular/router';
 
 export const APP_KEY = 'App';
+export const IS_LAUNCHED = 'isLaunched';
 // @Component修饰class
 // selector:定义选择器
 @Component({

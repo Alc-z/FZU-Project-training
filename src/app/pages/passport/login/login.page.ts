@@ -1,4 +1,4 @@
-import { LocalStorageService } from './../../../shared/local-storage.service';
+import { LocalStorageService } from './../../../shared/services/local-storage.service';
 import { Router } from '@angular/router';
 import { UserValidation } from './../user-validation';
 import { AjaxResult } from './../../../shared/class/ajax-result';
