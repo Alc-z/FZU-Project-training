@@ -1,11 +1,11 @@
-import { LocalStorageService } from './../../../shared/services/local-storage.service';
+import { HomePage } from './../../home/home.page';
 import { Router } from '@angular/router';
 import { UserValidation } from './../user-validation';
-import { AjaxResult } from './../../../shared/class/ajax-result';
 import { PassportService } from './../passport.service';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { AlertController, ToastController, MenuController } from '@ionic/angular';
+import { AlertController, ToastController, MenuController, NavController } from '@ionic/angular';
+import { HomePage } from '../../home/home.page';
 
 @Component({
     selector: 'app-login',
@@ -22,6 +22,7 @@ export class LoginPage implements OnInit {
         private toastController: ToastController,
         private passportService: PassportService,
         private alertController: AlertController,
+        private navCtrl: NavController,
         private router: Router,
         private menuController: MenuController
     ) {
@@ -89,7 +90,8 @@ export class LoginPage implements OnInit {
     ngOnInit() {
         if (!this.passportService.isExpired()) {
             this.passportService.login(this.passportService.getUserValidation());
-            this.router.navigateByUrl('/home');
+            // this.router.navigateByUrl('/home');
+            this.navCtrl.navigateForward('/home');
         }
     }
 

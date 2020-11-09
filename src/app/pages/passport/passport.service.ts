@@ -109,7 +109,7 @@ export class PassportService {
 
         if (loginAccount != null && loginAccount.credential === input.passworrdToken) {
             input.userId = loginAccount.userId;
-            input.date = new Date().getTime().toString();
+            input.date = new Date(+new Date() + 8 * 3600 * 1000).toISOString().replace(/T/g, ' ').replace(/\.[\d]{3}Z/, '');
             this.addUserValidation(input);
             return new AjaxResult(true, null);
         }
@@ -121,9 +121,10 @@ export class PassportService {
         if (userValidation === null) {
             return true;
         }
-        const logDate = parseInt(userValidation.date);
-        const current = new Date().getTime();
+        console.log('userValidation time:', userValidation.date);
+        const logDate = new Date(userValidation.date);
+        const current = new Date();
         // console.log('time:', (current - logDate) / (60 * 60 * 24 * 1000));
-        return (current - logDate) / (60 * 60 * 24 * 1000) > 5;
+        return (current.getTime() - logDate.getTime()) / (60 * 60 * 24 * 1000) > 5;
     }
 }

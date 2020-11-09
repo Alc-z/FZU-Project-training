@@ -1,7 +1,7 @@
 import { PassportService } from './../passport.service';
 import { element } from 'protractor';
 import { AuthenticationCodeService } from './../authentication-code.service';
-import { AlertController, IonSlides, MenuController, ToastController } from '@ionic/angular';
+import { AlertController, IonSlides, MenuController, NavController, ToastController } from '@ionic/angular';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Signup } from '../signup';
 import { NgForm } from '@angular/forms';
@@ -41,6 +41,7 @@ export class SignupPage implements OnInit {
     constructor(
         private authenticationCodeService: AuthenticationCodeService,
         private passportService: PassportService,
+        private navCtrl: NavController,
         private router: Router,
         private menuController: MenuController,
         private toastCtrl: ToastController,
@@ -156,7 +157,7 @@ export class SignupPage implements OnInit {
 
 
     finishSignup() {
-        this.router.navigateByUrl('/login');
+        this.router.navigateByUrl('/passport/login');
     }
 
     // 倒计时
@@ -176,9 +177,6 @@ export class SignupPage implements OnInit {
             this.settime();
         }, 1000);
     }
-
-    
-    
 
     onInfoSubmit(form: NgForm) {
         this.passportService.signupUser(this.signup);

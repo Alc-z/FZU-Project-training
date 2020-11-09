@@ -1,7 +1,7 @@
 import { PassportService } from './pages/passport/passport.service';
 import { Component, OnInit } from '@angular/core';
 
-import { MenuController, Platform } from '@ionic/angular';
+import { MenuController, NavController, Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 
@@ -29,7 +29,7 @@ export class AppComponent implements OnInit {
         private statusBar: StatusBar,
         private passportService: PassportService,
         private menuController: MenuController,
-
+        private navCtrl: NavController,
     ) {
         this.initializeApp();
         // todo
