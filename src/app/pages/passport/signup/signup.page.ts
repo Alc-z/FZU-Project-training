@@ -86,7 +86,7 @@ export class SignupPage implements OnInit {
     }
     /**
      * 验证手机号
-     * @param form 
+     * @param form
      */
     onSubmitPhone(form: NgForm) {
         this.submited = true;
@@ -118,7 +118,7 @@ export class SignupPage implements OnInit {
     * 检验验证码
     */
     async checkCode() {
-        console.log(this.verifyCode);
+        // console.log(this.verifyCode);
         if (this.signup.code == null || this.signup.code === '') {
             const toast = await this.toastCtrl.create({
                 message: '输入不能为空',

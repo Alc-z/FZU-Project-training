@@ -2,13 +2,10 @@ import { Injectable } from '@angular/core';
 
 @Injectable({
     providedIn: 'root'
-})
-export class User {
-    id: number;
+  })
+export class Shop {
     shopName: string;
+    shortName: string;
     phone: string;
     email: string;
-    createTime: Date;
 }
-
-

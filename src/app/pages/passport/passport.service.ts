@@ -7,6 +7,8 @@ import { Signup } from './signup';
 import { Injectable } from '@angular/core';
 import { LocalStorageService } from 'src/app/shared/services/local-storage.service';
 
+
+export const T_USER = 'TUser';
 @Injectable({
     providedIn: 'root'
 })
@@ -14,12 +16,14 @@ export class PassportService {
     private storage = window.localStorage;
     private id: number;
 
+
+
     constructor(private localStorageService: LocalStorageService) {
     }
 
     async signupUser(signup: Signup) {
         if (this.isUniquePhone(signup.phone)) {
-            const userArr: User[] = this.localStorageService.get('User', new Array());
+            const userArr: User[] = this.localStorageService.get(T_USER, new Array());
             this.id = userArr.length + 1;
             console.log('id:' + this.id);
 
@@ -30,7 +34,7 @@ export class PassportService {
             user.createTime = new Date();
 
             userArr.push(user);
-            this.localStorageService.set('User', userArr);
+            this.localStorageService.set(T_USER, userArr);
 
             this.addLoginAccount(signup, user);
             return new AjaxResult(true, null);
@@ -47,7 +51,7 @@ export class PassportService {
     }
 
     getUser(id: number): User {
-        const userArr: User[] = this.localStorageService.get('User', new Array());
+        const userArr: User[] = this.localStorageService.get(T_USER, new Array());
         if (id >= this.id) {
             throw new Error('id 超出范围');
         }
@@ -55,7 +59,7 @@ export class PassportService {
     }
 
     isUniquePhone(phone: string): boolean {
-        const userArr: User[] = this.localStorageService.get('User', []);
+        const userArr: User[] = this.localStorageService.get(T_USER, []);
         userArr.forEach(item => {
             if (item.phone === phone) {
                 return false;
@@ -124,7 +128,6 @@ export class PassportService {
         console.log('userValidation time:', userValidation.date);
         const logDate = new Date(userValidation.date);
         const current = new Date();
-        // console.log('time:', (current - logDate) / (60 * 60 * 24 * 1000));
         return (current.getTime() - logDate.getTime()) / (60 * 60 * 24 * 1000) > 5;
     }
 }
