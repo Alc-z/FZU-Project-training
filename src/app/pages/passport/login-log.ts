@@ -1,9 +1,9 @@
-export class UserValidation {
+export class LoginLog {
     id: number;
     userId: number;
     type: boolean;
     thirdParty: string;
     identifier: string;
-    passworrdToken: string;
+    // passwordToken: string;
     date: string;
 }

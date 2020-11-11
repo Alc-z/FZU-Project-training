@@ -1,11 +1,8 @@
-import { HomePage } from './../../home/home.page';
 import { Router } from '@angular/router';
-import { UserValidation } from './../user-validation';
 import { PassportService } from './../passport.service';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AlertController, ToastController, MenuController, NavController } from '@ionic/angular';
-import { HomePage } from '../../home/home.page';
 
 @Component({
     selector: 'app-login',
@@ -26,10 +23,9 @@ export class LoginPage implements OnInit {
         private router: Router,
         private menuController: MenuController
     ) {
-        const userValidation = this.passportService.getUserValidation();
-        console.log('uservalidation', userValidation);
-        if (userValidation !== null) {
-            this.login.identifier = userValidation.identifier;
+        const loginLog = this.passportService.getLoginLog();
+        if (loginLog !== null) {
+            this.login.identifier = loginLog.identifier;
         }
     }
 
@@ -58,13 +54,13 @@ export class LoginPage implements OnInit {
             return;
         }
 
-        const userValidation = new UserValidation();
-        userValidation.identifier = this.login.identifier;
-        userValidation.passworrdToken = this.login.password;
-        userValidation.date = new Date().valueOf().toString();
+        // const loginLog = new LoginLog();
+        // loginLog.identifier = this.login.identifier;
+        // loginLog.passwordToken = this.login.password;
+        // loginLog.date = new Date().valueOf().toString();
 
 
-        this.passportService.login(userValidation).then((ajaxResult) => {
+        this.passportService.login(this.login).then((ajaxResult) => {
             if (ajaxResult.success) {
                 // 验证成功，页面跳转
                 this.router.navigateByUrl('home');
@@ -78,9 +74,7 @@ export class LoginPage implements OnInit {
                 });
             }
         });
-
     }
-
 
     // 点击忘记密码时调用
     onForgotPassword() {
@@ -89,8 +83,9 @@ export class LoginPage implements OnInit {
 
     ngOnInit() {
         if (!this.passportService.isExpired()) {
-            this.passportService.login(this.passportService.getUserValidation());
-            // this.router.navigateByUrl('/home');
+            const loginLog = this.passportService.getLoginLog();
+            loginLog.date = new Date(+new Date() + 8 * 3600 * 1000).toISOString().replace(/T/g, ' ').replace(/\.[\d]{3}Z/, '');
+            this.passportService.addLoginLog(loginLog);
             this.navCtrl.navigateForward('/home');
         }
     }

@@ -1,6 +1,5 @@
+import { LoginLog } from './login-log';
 import { AjaxResult } from './../../shared/class/ajax-result';
-import { UserValidation } from './user-validation';
-import { element } from 'protractor';
 import { LoginAccount } from './LoginAccount';
 import { User } from './User';
 import { Signup } from './signup';
@@ -9,14 +8,14 @@ import { LocalStorageService } from 'src/app/shared/services/local-storage.servi
 
 
 export const T_USER = 'TUser';
+export const T_ACCOUNT = 'TAccount';
+export const T_LOGIN_LOG = 'TLoginLog';
 @Injectable({
     providedIn: 'root'
 })
 export class PassportService {
     private storage = window.localStorage;
     private id: number;
-
-
 
     constructor(private localStorageService: LocalStorageService) {
     }
@@ -46,10 +45,6 @@ export class PassportService {
         }
     }
 
-    insertUser(user: User) {
-
-    }
-
     getUser(id: number): User {
         const userArr: User[] = this.localStorageService.get(T_USER, new Array());
         if (id >= this.id) {
@@ -69,7 +64,7 @@ export class PassportService {
     }
 
     addLoginAccount(signup: Signup, user: User) {
-        const loginAccountArr: LoginAccount[] = this.localStorageService.get('LoginAccount', new Array());
+        const loginAccountArr: LoginAccount[] = this.localStorageService.get(T_ACCOUNT, new Array());
 
         const loginPhone = new LoginAccount();
         loginPhone.userId = user.id;
@@ -84,11 +79,11 @@ export class PassportService {
         loginEmail.credential = signup.password;
         loginAccountArr.push(loginEmail);
 
-        this.localStorageService.set('LoginAccount', loginAccountArr);
+        this.localStorageService.set(T_ACCOUNT, loginAccountArr);
     }
 
     getLoginAccount(identifier: string): LoginAccount {
-        const loginAccountArr: LoginAccount[] = this.localStorageService.get('LoginAccount', new Array());
+        const loginAccountArr: LoginAccount[] = this.localStorageService.get(T_ACCOUNT, new Array());
         let result: LoginAccount;
         loginAccountArr.forEach(item => {
             if (item.identifier === identifier) {
@@ -99,34 +94,39 @@ export class PassportService {
         return result;
     }
 
-    // 只存最新登入的一个用户
-    addUserValidation(userValidation: UserValidation) {
-        this.localStorageService.set('UserValidation', userValidation);
+
+    addLoginLog(loginLog: LoginLog) {
+        const loginLogDto: LoginLog[] = this.localStorageService.get(T_LOGIN_LOG, []);
+        this.localStorageService.set(T_LOGIN_LOG, loginLog);
     }
 
-    getUserValidation(): UserValidation {
-        return this.localStorageService.get('UserValidation', null);
+    getLoginLog(): LoginLog {
+        const loginLogArr = this.localStorageService.get(T_LOGIN_LOG, null);
+        if (loginLogArr === null) {
+            return null;
+        }
+
+        return loginLogArr[0];
     }
 
-    async login(input: UserValidation) {
+    async login(input: any) {
         const loginAccount = this.getLoginAccount(input.identifier);
-
-        if (loginAccount != null && loginAccount.credential === input.passworrdToken) {
+        if (loginAccount != null && loginAccount.credential === input.password) {
+            // if (loginAccount != null && loginAccount.credential === input.passwordToken) {
             input.userId = loginAccount.userId;
             input.date = new Date(+new Date() + 8 * 3600 * 1000).toISOString().replace(/T/g, ' ').replace(/\.[\d]{3}Z/, '');
-            this.addUserValidation(input);
+            this.addLoginLog(input);
             return new AjaxResult(true, null);
         }
         return new AjaxResult(false, null, { message: '用户密码不正确', details: '' });
     }
 
     isExpired(): boolean {
-        const userValidation = this.getUserValidation();
-        if (userValidation === null) {
+        const loginLog = this.getLoginLog();
+        if (loginLog === null) {
             return true;
         }
-        console.log('userValidation time:', userValidation.date);
-        const logDate = new Date(userValidation.date);
+        const logDate = new Date(loginLog.date);
         const current = new Date();
         return (current.getTime() - logDate.getTime()) / (60 * 60 * 24 * 1000) > 5;
     }

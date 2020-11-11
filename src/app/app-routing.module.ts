@@ -2,6 +2,7 @@ import { StartAppGuard } from './core/start-app.guard';
 
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes, CanActivate } from '@angular/router';
+import { LoginGuard } from './core/login.guard';
 
 const routes: Routes = [
   {
@@ -25,13 +26,13 @@ const routes: Routes = [
   },
   {
     path: 'home',
-    loadChildren: () => import('./pages/home/home.module').then( m => m.HomePageModule)
-  },  {
+    loadChildren: () => import('./pages/home/home.module').then( m => m.HomePageModule),
+    canActivate: [LoginGuard]
+  },
+  {
     path: 'setting',
     loadChildren: () => import('./pages/setting/setting.module').then( m => m.SettingPageModule)
   },
-
-
 ];
 
 @NgModule({

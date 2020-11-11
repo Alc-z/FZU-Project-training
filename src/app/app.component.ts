@@ -33,7 +33,9 @@ export class AppComponent implements OnInit {
     ) {
         this.initializeApp();
         // todo
-        passportService.getUserValidation();
+        // passportService.getLoginLog();
+
+        //todo
         // this.identifier = .identifier;
 
         // this.events.subscribe('shop:modified', (shop) => {

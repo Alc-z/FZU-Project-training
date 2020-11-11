@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 
 import { PassportRoutingModule } from './passport-routing.module';
 import { BrowserModule } from '@angular/platform-browser';
+import { ForgotPasswordPage } from './forgot-password/forgot-password.page';
 
 
 
@@ -13,6 +14,7 @@ import { BrowserModule } from '@angular/platform-browser';
   declarations: [
     SignupPage,
     LoginPage,
+    ForgotPasswordPage,
   ],
   imports: [
     // CommonModule,
