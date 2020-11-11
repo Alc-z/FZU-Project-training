@@ -97,7 +97,11 @@ export class PassportService {
 
     addLoginLog(loginLog: LoginLog) {
         const loginLogDto: LoginLog[] = this.localStorageService.get(T_LOGIN_LOG, []);
-        this.localStorageService.set(T_LOGIN_LOG, loginLog);
+        loginLogDto.push(loginLog);
+        if (loginLogDto.length > 10){
+            loginLogDto.pop();
+        }
+        this.localStorageService.set(T_LOGIN_LOG, loginLogDto);
     }
 
     getLoginLog(): LoginLog {
@@ -126,6 +130,7 @@ export class PassportService {
         if (loginLog === null) {
             return true;
         }
+        console.log('date', loginLog.date);
         const logDate = new Date(loginLog.date);
         const current = new Date();
         return (current.getTime() - logDate.getTime()) / (60 * 60 * 24 * 1000) > 5;

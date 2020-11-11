@@ -1,4 +1,4 @@
-<ion-header class="ion=ion-padding-vertcal">
+<ion-header>
     <ion-toolbar>
         <a *ngIf="slideIndex!==0" (click)="onPrevious()">上一步</a>
     </ion-toolbar>
@@ -119,7 +119,7 @@
                         <p [hidden]="!shopName.errors?.required" class="padding-start">请输入店铺的名称</p>
 
                     </ion-text>
-                    <ion-text class="ion-text-left" color="danger" *ngIf="(shopName.invalid && shopName.dirty)">
+                    <ion-text class="ion-text-left" color="danger" *ngIf="(shopName.invalid && shopName.touched)">
                         <p [hidden]="!shopName.errors?.pattern" class="padding-start">店铺名称过长</p>
                     </ion-text>
                 </ion-item>
@@ -141,7 +141,7 @@
                     </ion-input> -->
                     <ion-input required type="password" placeholder="请输入登入密码" [(ngModel)]="signup.password"
                         name="password" #password="ngModel"
-                        pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,12}$">
+                        pattern="^(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{6,12}$">
                     </ion-input>
                     <ion-text class="ion-text-left" color="danger" *ngIf="(password.invalid && password.touched)">
                         <p [hidden]="!password.errors?.required" class="padding-start">请输入登入密码</p>
@@ -173,7 +173,7 @@
             <ion-grid>
                 <ion-text>
                     <h3>注册成功</h3>
-                    <ion-button href="/passport/login" class="full-width" expand="full" color="primary">
+                    <ion-button routerLink="/passport/login" class="full-width" expand="full" color="primary">
                         完成
                     </ion-button>
                 </ion-text>

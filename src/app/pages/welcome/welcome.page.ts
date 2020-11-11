@@ -4,7 +4,6 @@ import { IonSlide, IonSlides } from '@ionic/angular';
 import { Router } from '@angular/router';
 
 export const APP_KEY = 'App';
-export const IS_LAUNCHED = 'isLaunched';
 // @Component修饰class
 // selector:定义选择器
 @Component({
@@ -16,22 +15,9 @@ export const IS_LAUNCHED = 'isLaunched';
 export class WelcomePage implements OnInit {
     showSkip = true;
     @ViewChild('slides', { static: false }) slides: IonSlides;
-    constructor(private localStorageService: LocalStorageService, private router: Router) { }
+    constructor(private router: Router) { }
 
     ngOnInit() {
-        // // 第一次调用get方法时，APP_KEY不存在，第二个参数会作为默认值返回
-        // const appConfig: any = this.localStorageService.get(APP_KEY, {
-        //     isLaunched: false,
-        //     version: '1.0.0'
-        // });
-
-        // if (appConfig.isLaunched === false) {
-        //     appConfig.isLaunched = true;
-        //     this.localStorageService.set(APP_KEY, appConfig);
-        // } else {
-        //     // todo
-        //     this.router.navigateByUrl('folder/Inbox');
-        // }
     }
 
     onSlideWillChange(event) {
@@ -42,6 +28,6 @@ export class WelcomePage implements OnInit {
     }
 
     onSkip() {
-        this.router.navigateByUrl('passport/signup');
+        this.router.navigateByUrl('passport/login');
     }
 }

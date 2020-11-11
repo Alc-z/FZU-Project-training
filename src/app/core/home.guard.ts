@@ -4,16 +4,16 @@ import { Observable } from 'rxjs';
 import { PassportService } from '../pages/passport/passport.service';
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root'
 })
-export class LoginGuard implements CanActivate {
-    constructor(private router: Router, private passprotService: PassportService) { }
+export class HomeGuard implements CanActivate {
+  constructor(private router: Router, private passprotService: PassportService) { }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
         if (!this.passprotService.isExpired()) {
-            this.router.navigateByUrl('home');
-            return false;
+            return true;
         }
-        return true;
+        this.router.navigateByUrl('passport/login');
+        return false;
     }
 }

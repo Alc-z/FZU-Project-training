@@ -3,6 +3,7 @@ import { LoginPage } from './login/login.page';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { SignupPage } from './signup/signup.page';
+import { LoginGuard } from 'src/app/core/login.guard';
 
 const routes: Routes = [
   {
@@ -11,7 +12,8 @@ const routes: Routes = [
   },
   {
     path: 'login',
-    component: LoginPage
+    component: LoginPage,
+    canActivate: [LoginGuard]
   },
   {
     path: 'forgot-password',
