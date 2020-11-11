@@ -13,13 +13,11 @@ export class SettingService {
     private shopService: ShopService
   ) {
     this.load(0);
-    console.log('user:', this.user);
   }
 
   // 登入后初始化
   load(userId: number) {
     const userDto = this.passportService.getUser(userId);
-    console.log('userDto', userDto);
     const shopDto = this.shopService.getShop(userDto.shopName);
     this.user = {
       ...userDto,

@@ -4,15 +4,18 @@ import { FormsModule } from '@angular/forms';
 import { LocalStorageService } from './services/local-storage.service';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ConfirmDirective } from './directives/confirm.directive';
 
 
 
 @NgModule({
   declarations: [
-    CopyrightComponent
+    CopyrightComponent,
+    ConfirmDirective
   ],
   providers: [
-    LocalStorageService
+    LocalStorageService,
+    ConfirmDirective
   ],
   imports: [
     CommonModule,
@@ -23,7 +26,8 @@ import { CommonModule } from '@angular/common';
     CommonModule,
     FormsModule,
     IonicModule,
-    CopyrightComponent
+    CopyrightComponent,
+    ConfirmDirective
   ]
 })
 export class SharedModule { }

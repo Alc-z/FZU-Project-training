@@ -1,9 +1,42 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>setting</ion-title>
+    <ion-buttons slot="start">
+      <ion-button (click)="goToPage('/home')" color="primary">
+        <ion-icon name="arrow-back"></ion-icon>返回
+      </ion-button>
+      <!-- <ion-back-button text="返回" color="primary"></ion-back-button> -->
+    </ion-buttons>
+    <ion-title>店铺设置</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-<ion-input type="text" placeholder="123" >{{user.id}}</ion-input>
+<ion-content color="medium">
+  <ion-list inset="true">
+    <ion-item detail (click)="goToPage('/shop')">
+      <ion-label>店铺设置</ion-label>
+    </ion-item>
+    <ion-item (click)="goToPage('setting/change-password')">
+      <ion-label>修改密码</ion-label>
+    </ion-item>
+  </ion-list>
+
+  <ion-list inset="true">
+    <ion-item detail (click)="goToPage('/about-us')">
+      <ion-label>关于我们</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>联系客服</ion-label>
+      <a href="tel:13222222222">13222222222</a>
+    </ion-item>
+    <ion-item>
+      <ion-label>版本号</ion-label>
+      <ion-note slot="end">{{version}}</ion-note>
+    </ion-item>
+  </ion-list>
+
+  <ion-list inset="true">
+    <ion-item (click)="onLogout()">
+      安全退出
+    </ion-item>
+  </ion-list>
 </ion-content>

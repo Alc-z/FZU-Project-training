@@ -98,18 +98,18 @@ export class PassportService {
     addLoginLog(loginLog: LoginLog) {
         const loginLogDto: LoginLog[] = this.localStorageService.get(T_LOGIN_LOG, []);
         loginLogDto.push(loginLog);
-        if (loginLogDto.length > 10){
+        if (loginLogDto.length > 10) {
             loginLogDto.pop();
         }
         this.localStorageService.set(T_LOGIN_LOG, loginLogDto);
     }
 
     getLoginLog(): LoginLog {
-        const loginLogArr = this.localStorageService.get(T_LOGIN_LOG, null);
-        if (loginLogArr === null) {
+        const loginLogArr = this.localStorageService.get(T_LOGIN_LOG, []);
+        console.log('loginLogArr', loginLogArr);
+        if (loginLogArr.length <= 0) {
             return null;
         }
-
         return loginLogArr[0];
     }
 
@@ -127,6 +127,7 @@ export class PassportService {
 
     isExpired(): boolean {
         const loginLog = this.getLoginLog();
+        console.log('loginLog', loginLog);
         if (loginLog === null) {
             return true;
         }
@@ -134,5 +135,9 @@ export class PassportService {
         const logDate = new Date(loginLog.date);
         const current = new Date();
         return (current.getTime() - logDate.getTime()) / (60 * 60 * 24 * 1000) > 5;
+    }
+
+    cleanLog() {
+        this.localStorageService.set(T_LOGIN_LOG, []);
     }
 }
