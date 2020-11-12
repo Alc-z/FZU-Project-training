@@ -108,12 +108,6 @@ export class SignupPage implements OnInit {
         this.settime();
     }
 
-    // onValidateCode(form: NgForm) {
-    //     this.validated = this.authenticationCodeService.validate(this.signup.code);
-    //     console.log('validated:' + this.validated);
-    // }
-
-
     /*
     * 检验验证码
     */
@@ -152,7 +146,6 @@ export class SignupPage implements OnInit {
             this.pwStateTips = '密码不一致';
             return;
         }
-        console.log('state:' + this.pwStateTips);
     }
 
 

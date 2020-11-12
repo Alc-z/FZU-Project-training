@@ -8,7 +8,7 @@ export class User {
     shopName: string;
     phone: string;
     email: string;
-    createTime: Date;
+    createTime: string;
 }
 
 

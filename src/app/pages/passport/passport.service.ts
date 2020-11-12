@@ -1,3 +1,5 @@
+import { ShopService } from './../setting/shop/shop.service';
+import { T_USER, UserService } from './user.service';
 import { ChangePasswordPage } from './../setting/change-password/change-password.page';
 import { LoginLog } from './login-log';
 import { AjaxResult } from './../../shared/class/ajax-result';
@@ -6,36 +8,44 @@ import { User } from './user';
 import { Signup } from './signup';
 import { Injectable } from '@angular/core';
 import { LocalStorageService } from 'src/app/shared/services/local-storage.service';
+import { Shop } from '../setting/shop/shop';
 
 
-export const T_USER = 'TUser';
+
 export const T_ACCOUNT = 'TAccount';
 export const T_LOGIN_LOG = 'TLoginLog';
 @Injectable({
     providedIn: 'root'
 })
 export class PassportService {
-    private storage = window.localStorage;
     private id: number;
 
-    constructor(private localStorageService: LocalStorageService) {
-    }
+    constructor(
+        private localStorageService: LocalStorageService,
+        private userService: UserService,
+        private shopService: ShopService
+    ) { }
 
     async signupUser(signup: Signup) {
         if (this.isUniquePhone(signup.phone)) {
-            const userArr: User[] = this.localStorageService.get(T_USER, new Array());
-            this.id = userArr.length + 1;
+            // 记录用户id
+            this.id = this.localStorageService.get(T_USER, []).length + 1;
 
             const user = new User();
             user.id = this.id;
+            user.shopName = signup.shopName;
             user.phone = signup.phone;
             user.email = signup.email;
-            user.createTime = new Date();
-
-            userArr.push(user);
-            this.localStorageService.set(T_USER, userArr);
-
+            user.createTime = new Date(+new Date() + 8 * 3600 * 1000).toISOString().replace(/T/g, ' ').replace(/\.[\d]{3}Z/, '');
+            this.userService.addUser(user);
             this.addLoginAccount(signup, user);
+
+            const shop = new Shop();
+            shop.shopName = signup.shopName;
+            shop.phone = signup.phone;
+            shop.email = signup.email;
+            this.shopService.addShop(shop);
+
             return new AjaxResult(true, null);
         } else {
             return new AjaxResult(false, null, {

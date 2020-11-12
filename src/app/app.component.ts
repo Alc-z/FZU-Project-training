@@ -1,3 +1,4 @@
+import { UserService } from './pages/passport/user.service';
 import { PassportService } from './pages/passport/passport.service';
 import { Component, OnInit } from '@angular/core';
 
@@ -12,8 +13,9 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 })
 export class AppComponent implements OnInit {
     public selectedIndex = 0;
-
+    shopName: string;
     identifier: string;
+
     public appPages = [
         { title: '开店论坛', url: '/home', icon: 'chatbox' },
         { title: '手机橱窗', url: '/home', icon: 'create' },
@@ -28,22 +30,15 @@ export class AppComponent implements OnInit {
         private splashScreen: SplashScreen,
         private statusBar: StatusBar,
         private passportService: PassportService,
+        private userService: UserService,
         private menuController: MenuController,
-        private navCtrl: NavController,
     ) {
         this.initializeApp();
-        // todo
-        // passportService.getLoginLog();
-
-        //todo
-        // this.identifier = .identifier;
-
-        // this.events.subscribe('shop:modified', (shop) => {
-        //     if (shop != null && shop.phone !== '' && shop.phone != null) {
-        //         this.shopName = shop.shopName;
-        //         this.phone = shop.phone;
-        //     }
-        // });
+        const loginLog = this.passportService.getLoginLog();
+        const id = loginLog.userId;
+        const user = this.userService.getUser(id);
+        this.shopName = user.shopName;
+        this.identifier = loginLog.identifier;
     }
 
     ionViewWillEnter() {

@@ -1,0 +1,85 @@
+<ion-header>
+  <ion-toolbar no-border>
+    <ion-buttons slot="start">
+      <ion-back-button text="返回" color="primary"></ion-back-button>
+    </ion-buttons>
+    <ion-title>关于我们</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-card>
+    <ion-card-header>工程实训</ion-card-header>
+    <ion-card-content>
+      <ion-list>
+        <ion-item>
+          <ion-label><b>学号：</b></ion-label>
+          <ion-note slot="end">200325011</ion-note>
+        </ion-item>
+        <ion-item>
+          <ion-label><b>姓名：</b></ion-label>
+          <ion-note slot="end">王智伟</ion-note>
+        </ion-item>
+        <ion-item>
+          <ion-label><b>已完成功能:</b></ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-text>
+            <li><i><b>欢迎界面：</b></i>若不是第一次登陆则跳转到home界面；否则，进入欢迎界面</li>
+            <li><i><b>注册界面：</b></i>用手机号和邮箱进行注册；注册后存储在本地；随机生成验证码（倒计时）；</li>
+            <li><i><b>登录界面：</b></i>判断用户上次登陆时间，若超过6天则重新登陆；对比本地数据进行登陆用户信息</li>
+            <li><i><b>版权声明：</b></i>封装版权声明功能</li>
+            <li><i><b>主页界面：</b></i>实现左侧菜单栏；在主页显示用户信息</li>
+            <li><i><b>店铺信息设置：</b></i>实现页面的数据通信</li>
+          </ion-text>
+        </ion-item>
+        <ion-item>
+          <ion-label><b>未完成功能：</b></ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-text>
+            <li><i><b>一大推</b></i>不知道说啥</li>
+          </ion-text>
+        </ion-item>
+        <ion-item>
+          <ion-label><b>学习与收获：</b></ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-text>
+            然后就是掌握了一些Augular基本语法，ionic开发的框架。
+          </ion-text>
+        </ion-item>
+        <ion-item>
+          <ion-label><b>意见与建议</b></ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-text>
+            这个课真的太累人了：下完班什么事都没干，直接这个东西弄到半夜1、2点，现在已经占用到我上班时间来写这代码了，
+            并且后面还有几门课的作业要交。搞了几周真的有点熬不住了。
+
+            这个课程对于非全来说这样设置感觉并不是很合适，本来在职就有项目的锻炼，这个项目很大程度上加重了非全日同学的负担。
+            我本身是后端人员，对于前端玩法真的不太熟悉，用后端的思维来做前端真的很难受。
+            
+            1、对于样式和前端的debug，这个占据的时间实在是太多了，写一个小时代码debug2个小时。
+            
+            2、对于没有前端经验的人来说，代码敏感度达不到老师作业的要求：老师给的代码片段很多变量是没有解释的，上课说copy，后来也copy，后面出错位置debug找了半天，
+            才发现是copy的代码变量的问题，一直以为代码中的一个对象是内置的对象。
+
+            3、文档前后的表述不一致，特别是数据库的设计。在第七次任务中修改之前的太多的代码。希望不要有重构的事情发生。
+
+            4、前端版本过多，版本间的差距较大，搜索bug的时候答案少，耗费时间也变多。
+            
+            这门课对于一个有经验，或者说有一定前端基础的人来说，能平滑地做下去的情况下，工程量是不会太大，但是一般同学并不具备
+            这种条件，工程量是成倍加大。
+            最后还是希望这门课能进行适当压缩，精简。
+          </ion-text>
+        </ion-item>
+      </ion-list>
+
+      <ion-card-subtitle>日期</ion-card-subtitle>
+      <div>
+        <ion-datetime display-format="MM DD, YYYY HH:MM" value="2020-11-12T02:11" disabled="true"></ion-datetime>
+      </div>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
