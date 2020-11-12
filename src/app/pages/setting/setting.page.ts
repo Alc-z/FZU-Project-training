@@ -1,7 +1,7 @@
 import { PassportService } from './../passport/passport.service';
 import { Router } from '@angular/router';
 import { SettingService } from './setting.service';
-import { User } from './../passport/User';
+import { User } from '../passport/user';
 import { Component, OnInit } from '@angular/core';
 
 @Component({

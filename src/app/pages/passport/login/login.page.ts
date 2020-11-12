@@ -25,7 +25,6 @@ export class LoginPage implements OnInit {
     ) {
         const loginLog = this.passportService.getLoginLog();
         if (loginLog !== null) {
-            console.log(loginLog);
             this.login.identifier = loginLog.identifier;
         }
     }
@@ -77,12 +76,6 @@ export class LoginPage implements OnInit {
     }
 
     ngOnInit() {
-        // if (!this.passportService.isExpired()) {
-        //     const loginLog = this.passportService.getLoginLog();
-        //     loginLog.date = new Date(+new Date() + 8 * 3600 * 1000).toISOString().replace(/T/g, ' ').replace(/\.[\d]{3}Z/, '');
-        //     this.passportService.addLoginLog(loginLog);
-        //     this.navCtrl.navigateForward('/home');
-        // }
     }
 
 }
