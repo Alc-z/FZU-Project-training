@@ -20,7 +20,7 @@ export class CategoryListPage implements OnInit {
     constructor(
         private categoryService: CategoryService,
         private actionSheetCtrl: ActionSheetController,
-        private location: Location,
+        // private location: Location,
     ) {
         categoryService.getAll().then((data) => {
             this.categories = data.data;
@@ -75,9 +75,9 @@ export class CategoryListPage implements OnInit {
      */
     onSelectSubCategory(category: Category) {
         if (this.tab === 'FromProductAdd') {
-            this.events.publish('category:selected', category, Date.now());
-            console.log('category:selected');
-            this.location.back();
+            // this.events.publish('category:selected', category, Date.now());
+            // console.log('category:selected');
+            // this.location.back();
         }
     }
 
