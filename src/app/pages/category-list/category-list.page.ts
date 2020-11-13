@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { ActionSheetController } from '@ionic/angular';
 import { Category } from '../product/category/category';
@@ -20,6 +21,7 @@ export class CategoryListPage implements OnInit {
     constructor(
         private categoryService: CategoryService,
         private actionSheetCtrl: ActionSheetController,
+        private router: Router,
         // private location: Location,
     ) {
         categoryService.getAll().then((data) => {
@@ -39,11 +41,13 @@ export class CategoryListPage implements OnInit {
                     role: 'destructive',
                     handler: () => {
                         console.log('Destructive clicked');
+                        this.router.navigate(['/category-add'], {queryParams: {'categoryName': this.activeCategory.name}});
                     }
                 }, {
                     text: '编辑分类',
                     handler: () => {
                         console.log('Archive clicked');
+                        this.router.navigate(['/category-edit'], {queryParams: {'categoryId': this.activeCategory.id}});
                     }
                 }, {
                     text: '取消',
