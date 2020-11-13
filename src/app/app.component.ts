@@ -35,10 +35,12 @@ export class AppComponent implements OnInit {
     ) {
         this.initializeApp();
         const loginLog = this.passportService.getLoginLog();
-        const id = loginLog.userId;
-        const user = this.userService.getUser(id);
-        this.shopName = user.shopName;
-        this.identifier = loginLog.identifier;
+        if (loginLog) {
+            const id = loginLog.userId;
+            const user = this.userService.getUser(id);
+            this.shopName = user.shopName;
+            this.identifier = loginLog.identifier;
+        }
     }
 
     ionViewWillEnter() {
