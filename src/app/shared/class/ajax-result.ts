@@ -4,6 +4,5 @@ export class AjaxResult {
         public error?: { message: string; details: string; },
         public targetUrl?: string,
         public unAuthorizedRequest?: boolean) {
-
     }
 }
