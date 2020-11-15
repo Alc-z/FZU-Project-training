@@ -35,10 +35,6 @@ const routes: Routes = [
     loadChildren: () => import('./pages/setting/setting.module').then( m => m.SettingPageModule)
   },
   {
-    path: 'category-list',
-    loadChildren: () => import('./pages/category-list/category-list.module').then( m => m.CategoryListPageModule)
-  },
-  {
     path: 'product',
     loadChildren: () => import('./pages/product/product.module').then( m => m.ProductPageModule)
   },

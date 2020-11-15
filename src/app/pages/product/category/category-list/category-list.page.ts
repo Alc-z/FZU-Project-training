@@ -1,8 +1,8 @@
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { ActionSheetController } from '@ionic/angular';
-import { Category } from '../product/category/category';
-import { CategoryService } from '../product/category/category.service';
+import { Category } from '../category';
+import { CategoryService } from '../category.service';
 
 @Component({
     selector: 'app-category-list',

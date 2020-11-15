@@ -15,4 +15,9 @@ export class CategoryService {
         const categories = this.localStorageService.get(CATEGORY_KEY, CATEGORIES);
         return new AjaxResult(true, categories);
     }
+
+    getCategoryLength(): number {
+        const cg = this.localStorageService.get(CATEGORY_KEY, CATEGORIES);
+        return cg.length;
+    }
 }

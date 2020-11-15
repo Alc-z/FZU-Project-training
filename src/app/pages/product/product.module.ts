@@ -1,3 +1,5 @@
+import { CategoryEditPage } from './category/category-edit/category-edit.page';
+import { CategoryAddPage } from './category/category-add/category-add.page';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -7,6 +9,7 @@ import { IonicModule } from '@ionic/angular';
 import { ProductPageRoutingModule } from './product-routing.module';
 
 import { ProductPage } from './product.page';
+import { CategoryListPage } from './category/category-list/category-list.page';
 
 @NgModule({
   imports: [
@@ -15,6 +18,11 @@ import { ProductPage } from './product.page';
     IonicModule,
     ProductPageRoutingModule
   ],
-  declarations: [ProductPage]
+  declarations: [
+    ProductPage,
+    CategoryAddPage,
+    CategoryListPage,
+    CategoryEditPage,
+  ]
 })
 export class ProductPageModule {}
