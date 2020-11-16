@@ -17,6 +17,7 @@ export class CategoryAddPage implements OnInit {
   newCategoryName: string;
   categoryId: number;
   subCategoryId: number;
+  id: number;
   constructor(
     private activatedRouter: ActivatedRoute,
     private categoryService: CategoryService,
@@ -25,23 +26,29 @@ export class CategoryAddPage implements OnInit {
   ) {
     this.activatedRouter.queryParams.subscribe(queryParams => {
       this.categoryName = queryParams.categoryName;
-      if (this.categoryName !== '大分类') {
-        this.headTitle = '新增小分类';
-        this.categoryId = this.categoryService.findCategoryIndexByName(this.categoryName) + 1;
-        this.subCategoryId = this.categoryService.findSubCategoryLastIndexByCategoryName(this.categoryName) + 1;
-        this.category = {
-          id: this.categoryId,
-          name: '',
-          children: [{
-            id: this.categoryId * 10 + this.subCategoryId++,
-            name: '',
-            children: []
-          }]
-        };
+      this.id = queryParams.id;
+
+      if (this.id !== 0) {
+        this.addSubCategory();
       } else {
         this.addCategory();
       }
     });
+  }
+
+  private addSubCategory() {
+    this.headTitle = '新增小分类';
+    this.categoryId = this.categoryService.getCategoryLastIndexByName(this.categoryName) + 1;
+    this.subCategoryId = this.categoryService.getSubCategoryLastIndex(this.categoryName) + 1;
+    this.category = {
+      id: this.categoryId,
+      name: '',
+      children: [{
+        id: this.categoryId * 10 + this.subCategoryId++,
+        name: '',
+        children: []
+      }]
+    };
   }
 
   private addCategory() {
@@ -92,7 +99,7 @@ export class CategoryAddPage implements OnInit {
         toast.present();
       } else {
         const toast = await this.toastCtrl.create({
-          message: '新增失败，存在相同名称或者名称不能为空',
+          message: '新增失败，存在相同名称或者名称为空',
           duration: 3000
         });
         toast.present();
@@ -105,11 +112,11 @@ export class CategoryAddPage implements OnInit {
           message: '新增成功',
           duration: 3000
         });
-        this.router.navigateByUrl('/category-list');
+        this.router.navigateByUrl('/product/category-list');
         toast.present();
       } else {
         const toast = await this.toastCtrl.create({
-          message: '新增失败，存在相同名称或者名称不能为空',
+          message: '新增失败，存在相同名称或者名称为空',
           duration: 3000
         });
         toast.present();

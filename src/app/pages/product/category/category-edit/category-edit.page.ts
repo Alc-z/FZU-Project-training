@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AlertController, IonItemSliding, ModalController, ToastController } from '@ionic/angular';
+import { Category } from '../category';
+import { CategoryEditNamePage } from '../category-edit-name/category-edit-name.page';
+import { CategoryService } from '../category.service';
 
 @Component({
   selector: 'app-category-edit',
@@ -10,15 +15,17 @@ export class CategoryEditPage implements OnInit {
   private categoryId: any;
   private category: Category;
   private tab: number;
-  constructor(private modalController: ModalController,
+  constructor(
+    private modalController: ModalController,
     private categoryService: CategoryService,
     private activatedRoute: ActivatedRoute,
     private alertController: AlertController,
     private router: Router,
-    private toastCtrl: ToastController) {
+    private toastCtrl: ToastController
+  ) {
     this.activatedRoute.queryParams.subscribe(queryParams => {
       this.categoryId = queryParams.categoryId;
-      this.category = this.categoryService.findCategoryById(this.categoryId);
+      this.category = this.categoryService.getCategoryById(this.categoryId);
     });
   }
 
@@ -50,17 +57,19 @@ export class CategoryEditPage implements OnInit {
   }
 
   /**
-   * 编辑子分类名字
+   * { var }接受promise
+   * @param item 
+   * @param subCategory 
    */
   async onEditSubCategoryName(item: IonItemSliding, subCategory: Category) {
     item.close();
     const { data } = await this.presentModal(subCategory.name);
     this.tab = 0;
-    for (let i = 0; i < this.category.children.length; i++) {
-      if (data === this.category.children[i].name || data === '') {
-        // console.log('名字重复');
+    for (const child of this.category.children) {
+
+      if (data === child.name || data === '') {
         const toast = await this.toastCtrl.create({
-          message: '编辑失败，存在相同名称或者名称不能为空',
+          message: '编辑失败，存在相同名称或者名称为空',
           duration: 3000
         });
         toast.present();
@@ -95,11 +104,11 @@ export class CategoryEditPage implements OnInit {
             if (subId != null) { // 删除商品子分类
               item.close();
               this.categoryService.deleteSubCategoryById(this.category, subId);
-              this.category = this.categoryService.findCategoryById(this.categoryId);
+              this.category = this.categoryService.getCategoryById(this.categoryId);
             } else if (this.category.children.length === 0) { // 删除商品分类
               item.close();
               this.categoryService.deleteCategoryById(this.category.id);
-              this.router.navigateByUrl('/category-list');
+              this.router.navigateByUrl('/product/category-list');
             } else {
               item.close();
             }

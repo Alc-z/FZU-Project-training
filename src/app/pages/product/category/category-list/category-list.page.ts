@@ -17,19 +17,15 @@ export class CategoryListPage implements OnInit {
     activeSubCategory: Category;
     tab = '';
 
-    //在构造函数中依赖注入
     constructor(
         private categoryService: CategoryService,
         private actionSheetCtrl: ActionSheetController,
         private router: Router,
-        // private location: Location,
     ) {
-        categoryService.getAll().then((data) => {
-            this.categories = data.data;
-            if (this.categories) {
-                this.activeCategory = this.categories[0];
-            }
-        });
+        this.categories = categoryService.getCategories();
+        if (this.categories) {
+            this.activeCategory = this.categories[0];
+        }
     }
 
     async onPresentActionSheet() {
@@ -41,13 +37,13 @@ export class CategoryListPage implements OnInit {
                     role: 'destructive',
                     handler: () => {
                         console.log('Destructive clicked');
-                        this.router.navigate(['/category-add'], {queryParams: {'categoryName': this.activeCategory.name}});
+                        this.router.navigate(['/category-add'], { queryParams: { 'categoryName': this.activeCategory.name } });
                     }
                 }, {
                     text: '编辑分类',
                     handler: () => {
                         console.log('Archive clicked');
-                        this.router.navigate(['/category-edit'], {queryParams: {'categoryId': this.activeCategory.id}});
+                        this.router.navigate(['/category-edit'], { queryParams: { 'categoryId': this.activeCategory.id } });
                     }
                 }, {
                     text: '取消',
@@ -74,9 +70,7 @@ export class CategoryListPage implements OnInit {
         this.subCategories = this.activeCategory.children;
     }
 
-    /**
-     * 选中小分类
-     */
+
     onSelectSubCategory(category: Category) {
         if (this.tab === 'FromProductAdd') {
             // this.events.publish('category:selected', category, Date.now());
