@@ -34,9 +34,11 @@
                     <ion-item (click)="onSelectSubCategory(activeCategory)">
                         <ion-label>无小分类进入大分类</ion-label>
                     </ion-item>
-                    <ion-item *ngFor="let c of subCategories" (click)="onSelectSubCategory(c)">
-                        <ion-label>{{c.name}}</ion-label>
+
+                    <ion-item *ngFor="let sc of subCategories" (click)="onSelectSubCategory(sc)">
+                        <ion-label>{{sc.name}}</ion-label>
                     </ion-item>
+
                     <ion-item routerLink="/product/category-add" [queryParams]="{categoryName: activeCategory?.name}">
                         <ion-text color="primary">
                             <ion-icon name="add-circle"></ion-icon>新增小分类

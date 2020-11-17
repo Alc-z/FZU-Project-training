@@ -1,4 +1,4 @@
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { ActionSheetController } from '@ionic/angular';
 import { Category } from '../category';
@@ -22,10 +22,28 @@ export class CategoryListPage implements OnInit {
         private actionSheetCtrl: ActionSheetController,
         private router: Router,
     ) {
-        this.categories = categoryService.getCategories();
-        if (this.categories) {
-            this.activeCategory = this.categories[0];
-        }
+        // 一定要异步 不然初始化没数据
+        categoryService.getCategoriesAsyn().then((data) => {
+            this.categories = data.data;
+            if (this.categories) {
+                this.activeCategory = this.categories[0];
+                this.subCategories = this.activeCategory.children;
+            }
+        });
+
+    }
+
+    /**
+     * 如果不加第二次进入的时候，不会刷新数据
+     */
+    ionViewWillEnter() {
+        this.categoryService.getCategoriesAsyn().then((data) => {
+            this.categories = data.data;
+            if (this.categories != null) {
+                this.activeCategory = this.categories[0];
+                this.subCategories = this.activeCategory.children;
+            }
+        });
     }
 
     async onPresentActionSheet() {

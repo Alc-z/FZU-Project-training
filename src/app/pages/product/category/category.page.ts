@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { IonItemSliding, ModalController } from '@ionic/angular';
+import { CategoryEditNamePage } from './category-edit-name/category-edit-name.page';
 
 @Component({
   selector: 'app-category',
@@ -7,9 +9,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CategoryPage implements OnInit {
 
-  constructor() { }
+  constructor( private modalController: ModalController) { }
 
   ngOnInit() {
   }
 
+  
 }

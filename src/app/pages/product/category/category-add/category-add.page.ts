@@ -26,7 +26,8 @@ export class CategoryAddPage implements OnInit {
   ) {
     this.activatedRouter.queryParams.subscribe(queryParams => {
       this.categoryName = queryParams.categoryName;
-      this.id = queryParams.id;
+      // tslint:disable-next-line: radix
+      this.id = parseInt(queryParams.id);
 
       if (this.id !== 0) {
         this.addSubCategory();
@@ -69,9 +70,6 @@ export class CategoryAddPage implements OnInit {
   ngOnInit() {
   }
 
-  /**
-   * 大分类中新增小分类
-   */
   onAddSubCategory() {
     this.category.children.push({
       // category 十位上， subcategoryid在各位上
@@ -88,7 +86,7 @@ export class CategoryAddPage implements OnInit {
    * 4、Toast
    */
   async onSave() {
-    if (this.categoryName === '大分类') { // 增加商品分类
+    if (this.categoryName === '大分类') {
       this.category.name = this.newCategoryName;
       if (this.categoryService.insert(this.category) === true) {
         const toast = await this.toastCtrl.create({

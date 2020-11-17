@@ -32,9 +32,6 @@ export class CategoryEditPage implements OnInit {
   ngOnInit() {
   }
 
-  /**
-   * 弹出模态框并传递参数
-   */
   private async presentModal(name: string) {
     const modal = await this.modalController.create({
       component: CategoryEditNamePage,
@@ -44,12 +41,8 @@ export class CategoryEditPage implements OnInit {
     return modal.onWillDismiss();
   }
 
-  /**
-   * 编辑分类名字
-   */
   async onEditCategoryName(item: IonItemSliding) {
     item.close();
-    console.log(this.category);
     const { data } = await this.presentModal(this.category.name);
     if (data) {
       this.category.name = data;
@@ -58,8 +51,8 @@ export class CategoryEditPage implements OnInit {
 
   /**
    * { var }接受promise
-   * @param item 
-   * @param subCategory 
+   * @param item
+   * @param subCategory
    */
   async onEditSubCategoryName(item: IonItemSliding, subCategory: Category) {
     item.close();
@@ -82,9 +75,6 @@ export class CategoryEditPage implements OnInit {
     }
   }
 
-  /**
-   * 删除分类
-   */
   async onDelete(item: IonItemSliding, subId?: number) {
     const alert = await this.alertController.create({
       header: '你确认要删除吗!',
@@ -93,19 +83,18 @@ export class CategoryEditPage implements OnInit {
         {
           text: '取消',
           role: 'cancel',
-          cssClass: 'secondary',
           handler: (blah) => {
             console.log('Confirm Cancel: blah');
           }
         }, {
           text: '确认',
-          handler: () => {
+          handler: async () => {
             console.log('Confirm Okay');
-            if (subId != null) { // 删除商品子分类
+            if (subId != null) {
               item.close();
               this.categoryService.deleteSubCategoryById(this.category, subId);
-              this.category = this.categoryService.getCategoryById(this.categoryId);
-            } else if (this.category.children.length === 0) { // 删除商品分类
+              this.category = await this.categoryService.getCategoryById(this.categoryId);
+            } else if (this.category.children.length === 0) {
               item.close();
               this.categoryService.deleteCategoryById(this.category.id);
               this.router.navigateByUrl('/product/category-list');
@@ -120,9 +109,6 @@ export class CategoryEditPage implements OnInit {
     await alert.present();
   }
 
-  /**
-   * 离开页面时保存修改数据
-   */
   ionViewDidLeave() {
     if (this.categoryService.modifyCategory(this.category)) {
       console.log('保存成功');

@@ -13,9 +13,18 @@ export class CategoryService {
 
     constructor(private localStorageService: LocalStorageService) { }
 
-    getCategories(): Category[] {
+    async getCategoriesAsyn(): Promise<AjaxResult> {
         const categories = this.localStorageService.get(CATEGORY_KEY, CATEGORIES);
-        return categories;
+        return {
+            data: categories,
+            success: true,
+            error: null,
+            unAuthorizedRequest: false
+        };
+    }
+
+    getCategories(): Category[] {
+        return this.localStorageService.get(CATEGORY_KEY, CATEGORIES);
     }
 
     private isValidName(category: Category): boolean {
@@ -96,9 +105,10 @@ export class CategoryService {
         if (this.isValidName(category) === false) {
             return false;
         }
-        const tmp = this.localStorageService.get(CATEGORY_KEY, CATEGORIES);
-        tmp.push(category);
-        this.localStorageService.set(CATEGORY_KEY, tmp);
+
+        const categories = this.localStorageService.get(CATEGORY_KEY, CATEGORIES);
+        categories.push(category);
+        this.localStorageService.set(CATEGORY_KEY, categories);
         return true;
     }
 
