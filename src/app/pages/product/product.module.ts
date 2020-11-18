@@ -1,3 +1,4 @@
+import { CategoryEditNamePage } from './category/category-edit-name/category-edit-name.page';
 import { CategoryEditPage } from './category/category-edit/category-edit.page';
 import { CategoryAddPage } from './category/category-add/category-add.page';
 import { NgModule } from '@angular/core';
@@ -23,6 +24,7 @@ import { CategoryListPage } from './category/category-list/category-list.page';
     CategoryAddPage,
     CategoryListPage,
     CategoryEditPage,
+    CategoryEditNamePage, // 不添加 input没有返回
   ]
 })
 export class ProductPageModule {}

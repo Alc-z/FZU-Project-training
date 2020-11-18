@@ -120,21 +120,23 @@ export class CategoryService {
         if (category === null) {
             return false;
         }
-        const tmp = this.localStorageService.get(CATEGORY_KEY, CATEGORIES);
+        const categories = this.localStorageService.get(CATEGORY_KEY, CATEGORIES);
         const index = this.getCategoryLastIndexByName(category.name);
-        console.log(index);
+
         if (index === -1) {
             return false;
         }
 
         category.children.forEach(child => {
-            tmp[index].children.push(child);
+            if (child.name !== '') {
+                categories[index].children.push(child);
+            }
         });
 
-        if (!this.isValidName(tmp[index])) {
+        if (!this.isValidName(categories[index])) {
             return false;
         } else {
-            this.update(tmp);
+            this.update(categories);
             return true;
         }
     }
@@ -167,13 +169,14 @@ export class CategoryService {
         return false;
     }
 
-    modifyCategory(cg: Category): boolean {
-        const index = this.getCategoryLastIndexById(cg.id);
+    modifyCategory(category: Category): boolean {
+        debugger;
+        const index = this.getCategoryLastIndexById(category.id);
         if (index === -1) {
             return false;
         }
         const categories = this.getCategories();
-        categories[index] = cg;
+        categories[index] = category;
         this.update(categories);
         return true;
     }

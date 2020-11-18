@@ -57,8 +57,6 @@ export class SignupPage implements OnInit {
     }
 
     ngOnInit() {
-        // this.signupSlides.lockSwipes(true);
-        // this.signupSlides.lockSwipeToNext(true);
     }
 
     ngAfterViewInit() {

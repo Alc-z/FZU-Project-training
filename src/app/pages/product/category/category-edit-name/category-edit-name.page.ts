@@ -2,29 +2,29 @@ import { Component, OnInit } from '@angular/core';
 import { ModalController, NavParams } from '@ionic/angular';
 
 @Component({
-  selector: 'app-category-edit-name',
-  templateUrl: './category-edit-name.page.html',
-  styleUrls: ['./category-edit-name.page.scss'],
+    selector: 'app-category-edit-name',
+    templateUrl: './category-edit-name.page.html',
+    styleUrls: ['./category-edit-name.page.scss'],
 })
 export class CategoryEditNamePage implements OnInit {
-  name: string;
+    name: string;
 
-  constructor(
-    private modalController: ModalController,
-    private navParams: NavParams
-  ) {
-    this.name = this.navParams.data['value'];
+    constructor(
+        private modalController: ModalController,
+        private navParams: NavParams
+    ) {
+        const value = 'value';
+        this.name = this.navParams.data[value];
+    }
 
-  }
+    ngOnInit() {
+    }
 
-  ngOnInit() {
-  }
+    dismiss(name?: string) {
+        this.modalController.dismiss(name);
+    }
 
-  dismiss(name?: string) {
-    this.modalController.dismiss(name);
-  }
-
-  onSave() {
-    this.dismiss(this.name);
-  }
+    onSave() {
+        this.dismiss(this.name);
+    }
 }

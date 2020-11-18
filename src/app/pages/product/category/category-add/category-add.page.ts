@@ -103,7 +103,7 @@ export class CategoryAddPage implements OnInit {
         toast.present();
       }
 
-    } else { // 增加商品小分类
+    } else {
       this.category.name = this.categoryName;
       if (this.categoryService.insertSubCateCategory(this.category) === true) {
         const toast = await this.toastCtrl.create({
