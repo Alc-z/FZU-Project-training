@@ -1,3 +1,4 @@
+import { AddProductPage } from './add-product/add-product.page';
 
 import { CategoryAddPage } from './category/category-add/category-add.page';
 import { CategoryEditNamePage } from './category/category-edit-name/category-edit-name.page';
@@ -37,7 +38,12 @@ const routes: Routes = [
     path: 'category-edit-name',
     component: CategoryEditNamePage
     // loadChildren: () => import('./category/category-edit-name/category-edit-name.module').then( m => m.CategoryEditNamePageModule)
+  },
+  {
+    path: 'add-product',
+    component: AddProductPage
   }
+
 
 
 ];

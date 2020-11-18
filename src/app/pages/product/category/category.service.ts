@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { AjaxResult } from 'src/app/shared/class/ajax-result';
 import { LocalStorageService } from 'src/app/shared/services/local-storage.service';
+import { ActiveCategory } from './active-category';
 import { Category } from './category';
 import { CATEGORIES } from './mock.categories';
 
@@ -10,8 +11,17 @@ export const CATEGORY_KEY = 'Category';
     providedIn: 'root'
 })
 export class CategoryService {
+    categorySubject = new Subject<ActiveCategory>();
+    constructor(private localStorageService: LocalStorageService) {
+    }
 
-    constructor(private localStorageService: LocalStorageService) { }
+    setActiveCategory(activeCategory: ActiveCategory) {
+        this.categorySubject.next(activeCategory);
+    }
+
+    watchCategory(): Observable<ActiveCategory> {
+        return this.categorySubject.asObservable();
+    }
 
     async getCategoriesAsyn(): Promise<AjaxResult> {
         const categories = this.localStorageService.get(CATEGORY_KEY, CATEGORIES);
