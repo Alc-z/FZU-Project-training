@@ -170,7 +170,6 @@ export class CategoryService {
     }
 
     modifyCategory(category: Category): boolean {
-        debugger;
         const index = this.getCategoryLastIndexById(category.id);
         if (index === -1) {
             return false;
