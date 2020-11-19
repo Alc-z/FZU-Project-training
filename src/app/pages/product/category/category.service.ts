@@ -1,7 +1,11 @@
-import { Injectable } from '@angular/core';
+import { Product } from './../product';
+import { Injectable, NgZone } from '@angular/core';
+import { Router } from '@angular/router';
+import { AlertController } from '@ionic/angular';
 import { Observable, Subject } from 'rxjs';
 import { AjaxResult } from 'src/app/shared/class/ajax-result';
 import { LocalStorageService } from 'src/app/shared/services/local-storage.service';
+import { ProductService } from '../product.service';
 import { ActiveCategory } from './active-category';
 import { Category } from './category';
 import { CATEGORIES } from './mock.categories';
@@ -12,7 +16,27 @@ export const CATEGORY_KEY = 'Category';
 })
 export class CategoryService {
     categorySubject = new Subject<ActiveCategory>();
-    constructor(private localStorageService: LocalStorageService) {
+    product: Product;
+    constructor(
+        private localStorageService: LocalStorageService,
+        private router: Router,
+    ) {    }
+
+    private initProduct(): void {
+        this.product = {
+            id: '',
+            name: '',
+            categoryId: null,
+            categoryName: '',
+            category: null,
+            barcode: '',
+            images: [],
+            price: null,
+            purchasePrice: null,
+            inventory: null,
+            standard: '',
+            remark: ''
+        };
     }
 
     setActiveCategory(activeCategory: ActiveCategory) {
@@ -188,6 +212,10 @@ export class CategoryService {
         categories[index] = category;
         this.update(categories);
         return true;
+    }
+
+    gotoPage(str: string): void {
+        this.router.navigateByUrl(str);
     }
 
 }

@@ -1,3 +1,4 @@
+import { AddProductPage } from './add-product/add-product.page';
 import { CategoryEditNamePage } from './category/category-edit-name/category-edit-name.page';
 import { CategoryEditPage } from './category/category-edit/category-edit.page';
 import { CategoryAddPage } from './category/category-add/category-add.page';
@@ -11,16 +12,19 @@ import { ProductPageRoutingModule } from './product-routing.module';
 
 import { ProductPage } from './product.page';
 import { CategoryListPage } from './category/category-list/category-list.page';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    ProductPageRoutingModule
+    ProductPageRoutingModule,
+    SharedModule
   ],
   declarations: [
     ProductPage,
+    AddProductPage, // 没添加导致ngform
     CategoryAddPage,
     CategoryListPage,
     CategoryEditPage,

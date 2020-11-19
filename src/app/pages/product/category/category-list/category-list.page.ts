@@ -1,8 +1,9 @@
+import { Category } from './../category';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { ActionSheetController } from '@ionic/angular';
-import { Category } from '../category';
 import { CategoryService } from '../category.service';
+import { Location } from '@angular/common';
 
 @Component({
     selector: 'app-category-list',
@@ -21,7 +22,13 @@ export class CategoryListPage implements OnInit {
         private categoryService: CategoryService,
         private actionSheetCtrl: ActionSheetController,
         private router: Router,
-    ) {}
+        private activatedRouter: ActivatedRoute,
+        private location: Location,
+    ) {
+        this.activatedRouter.queryParams.subscribe(queryParams => {
+            this.tab = queryParams.tab;
+        });
+    }
 
 
     /**
@@ -79,12 +86,11 @@ export class CategoryListPage implements OnInit {
         this.subCategories = this.activeCategory.children;
     }
 
-
     onSelectSubCategory(category: Category) {
-        
-    }
-
-    gotoAddCategory() {
+        if (this.tab === 'FromProductAdd') {
+            this.categoryService.setActiveCategory(category);
+            this.location.back();
+        }
     }
 
     ngOnInit() { }
