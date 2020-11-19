@@ -64,10 +64,9 @@ export class AddProductPage implements OnInit, OnDestroy {
                 alert.present();
                 if (ct) {
                     this.initProduct();
-                    this.product.categoryName = '默认分类';
-                    // this.product.supplier.name = '输入商品供应商';
+                    this.product.categoryName = '';
                 } else {
-                    this.router.navigateByUrl('/productList');
+                    this.router.navigateByUrl('/product/');
                 }
             } else {
                 const alert = await this.alertCtrl.create({

@@ -9,11 +9,11 @@ import { PassportService } from '../pages/passport/passport.service';
 export class HomeGuard implements CanActivate {
   constructor(private router: Router, private passprotService: PassportService) { }
 
-    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-        if (!this.passprotService.isExpired()) {
-            return true;
-        }
-        this.router.navigateByUrl('passport/login');
-        return false;
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
+    if (this.passprotService.isExpired()) {
+      this.router.navigateByUrl('passport/login');
+      return false;
     }
+    return true;
+  }
 }

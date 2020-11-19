@@ -1,9 +1,10 @@
+import { HomePage } from './pages/home/home.page';
 import { StartAppGuard } from './core/start-app.guard';
 
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes, CanActivate } from '@angular/router';
-import { LoginGuard } from './core/login.guard';
 import { HomeGuard } from './core/home.guard';
+import { HomePageModule } from './pages/home/home.module';
 
 const routes: Routes = [
   {
@@ -12,13 +13,8 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
-    path: 'folder/:id',
-    loadChildren: () => import('./folder/folder.module').then( m => m.FolderPageModule)
-  },
-  {
     path: 'welcome',
     loadChildren: () => import('./pages/welcome/welcome.module').then( m => m.WelcomePageModule),
-    // loadChildren: './pages/welcome/welcome.module#WelcomePageModule',
     canActivate: [StartAppGuard]
   },
   {
@@ -27,7 +23,8 @@ const routes: Routes = [
   },
   {
     path: 'home',
-    loadChildren: () => import('./pages/home/home.module').then( m => m.HomePageModule),
+    loadChildren: () => import('./pages/home/home.module').then(m => m.HomePageModule),
+    // component: HomePage,
     canActivate: [HomeGuard]
   },
   {

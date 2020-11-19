@@ -125,7 +125,7 @@ export class PassportService {
         if (loginLogArr.length <= 0) {
             return null;
         }
-        return loginLogArr[0];
+        return loginLogArr[loginLogArr.length - 1];
     }
 
     async ChangePasswordPage(input: any) {
@@ -154,8 +154,8 @@ export class PassportService {
 
     async login(input: any) {
         const loginAccount = this.getLoginAccount(input.identifier);
-        console.log('login credential', loginAccount.credential);
-        console.log('login password', input.password);
+        // console.log('login credential', loginAccount.credential);
+        // console.log('login password', input.password);
 
         if (loginAccount != null && loginAccount.credential === input.password) {
             input.userId = loginAccount.userId;

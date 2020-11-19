@@ -13,7 +13,7 @@ export class HomePage implements OnInit {
     sales: Array<{ title: string, content: string, previous: number, current: number }>;
     shortcuts = [
         [
-            { text: '新增商品', icon: 'add_salse', url: '/addProduct', disable: false },
+            { text: '新增商品', icon: 'add_salse', url: '/add-Product', disable: false },
             { text: '新增会员', icon: 'add_user', url: '/home', disable: false },
             { text: '收账记录', icon: 'sales_account', url: '/home', disable: false },
             { text: '支出管理', icon: 'a_note', url: '/home', disable: false },

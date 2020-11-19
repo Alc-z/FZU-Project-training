@@ -47,7 +47,6 @@ export class LoginPage implements OnInit {
                 duration: 3000
             });
         }
-        // 判断的代码省略，参考之前的任务自行补上下面代码
         if (form.controls.identifier.errors?.required) {
             toast.message = '请输入您的手机号码或者邮箱';
             toast.present();
@@ -56,7 +55,6 @@ export class LoginPage implements OnInit {
 
         this.passportService.login(this.login).then((ajaxResult) => {
             if (ajaxResult.success) {
-                // 验证成功，页面跳转
                 this.router.navigateByUrl('home');
             } else {
                 this.alertController.create({
@@ -70,7 +68,6 @@ export class LoginPage implements OnInit {
         });
     }
 
-    // 点击忘记密码时调用
     onForgotPassword() {
         this.router.navigateByUrl('passport/forgot-password');
     }

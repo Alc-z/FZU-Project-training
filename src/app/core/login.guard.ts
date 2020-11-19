@@ -10,10 +10,10 @@ export class LoginGuard implements CanActivate {
     constructor(private router: Router, private passprotService: PassportService) { }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-        if (!this.passprotService.isExpired()) {
-            this.router.navigateByUrl('home');
-            return false;
+        if (this.passprotService.isExpired()) {
+            return true;
         }
-        return true;
+        this.router.navigateByUrl('home');
+        return false;
     }
 }

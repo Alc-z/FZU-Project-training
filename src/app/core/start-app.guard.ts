@@ -10,7 +10,11 @@ import { LocalStorageService } from '../shared/services/local-storage.service';
 })
 export class StartAppGuard implements CanActivate {
 
-  constructor(private localStorageService: LocalStorageService, private router: Router, private passprotService: PassportService) { }
+  constructor(
+    private localStorageService: LocalStorageService,
+    private router: Router,
+    private passprotService: PassportService
+  ) { }
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
 
     const appConfig: any = this.localStorageService.get(APP_KEY, {

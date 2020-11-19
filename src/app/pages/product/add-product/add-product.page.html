@@ -27,7 +27,7 @@
       <ion-item>
         <ion-label position="fixed">条码</ion-label>
         <ion-input name="barCode" placeholder="输入商品条码" [(ngModel)]="product.barcode" #barCode="ngModel"></ion-input>
-        <div slot="end" (click)="onScan()">
+        <div slot="end">
           <ion-icon name="scan" style="font-size: 30px;"></ion-icon>
         </div>
       </ion-item>
@@ -76,7 +76,7 @@
         <ion-label position="fixed">备注</ion-label>
         <ion-input name="remark" placeholder="输入商品备注" type="text" [(ngModel)]="product.remark"></ion-input>
       </ion-item>
-      
+
     </ion-list>
   </form>
 

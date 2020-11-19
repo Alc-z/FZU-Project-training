@@ -48,7 +48,6 @@ export class AppComponent implements OnInit {
     }
 
     ionViewDidLeave() {
-        // this.events.unsubscribe('shop:modified');
         this.menuController.enable(true);
     }
 
