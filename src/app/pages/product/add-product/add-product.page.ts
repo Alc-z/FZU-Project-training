@@ -27,6 +27,8 @@ export class AddProductPage implements OnInit, OnDestroy {
         this.subscription = categoryService.watchCategory().subscribe(
             (activeCategory) => {
                 this.product.categoryName = activeCategory.name;
+                this.product.category = activeCategory;
+                this.product.categoryId = activeCategory.id;
             },
             (error) => {
             }
@@ -66,7 +68,7 @@ export class AddProductPage implements OnInit, OnDestroy {
                     this.initProduct();
                     this.product.categoryName = '';
                 } else {
-                    this.router.navigateByUrl('/product/');
+                    this.router.navigateByUrl('/home');
                 }
             } else {
                 const alert = await this.alertCtrl.create({
