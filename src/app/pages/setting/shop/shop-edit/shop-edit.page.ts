@@ -20,7 +20,11 @@ export class ShopEditPage implements OnInit {
     private shopService: ShopService,
     private settingService: SettingService,
     private toastCtrl: ToastController,
+    private statusBar: StatusBar,
   ) {
+    // 沉浸式并且悬浮透明
+    this.statusBar.overlaysWebView(true);
+
     activatedRoute.queryParams.subscribe(queryParams => {
       this.property = queryParams.property;
       this.title = queryParams.title;

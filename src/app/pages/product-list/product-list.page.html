@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-toolbar color="primary">
+
+    <ion-buttons slot="start">
+      <ion-button color="" (click)="gotoPage('/home')">
+        <ion-icon name="arrow-back"></ion-icon>返回
+      </ion-button>
+    </ion-buttons>
+    <ion-title>商品列表</ion-title>
+    <ion-button slot="end" color="primary" routerLink="/product/category-list">分类</ion-button>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+  <ion-toolbar color="light">
+    <ion-searchbar placeholder="请输入商品名称、拼音、数字" [(ngModel)]="queryTerm" showCancelButton="false"
+      (ionInput)="onInput($event)" showCancelButton="focus" slot="start">
+    </ion-searchbar>
+
+    <ion-buttons slot="end">
+      <ion-button fill="outline" color="primary" size="small" expand="block">商品盘点</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+
+
+  <ion-infinite-scroll threshold="100px" position="bottom" (ionInfinite)="onInfinite($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="加载更多商品数据...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>

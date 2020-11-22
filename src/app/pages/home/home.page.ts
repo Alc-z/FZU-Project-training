@@ -18,11 +18,12 @@ export class HomePage implements OnInit {
             { text: '收账记录', icon: 'sales_account', url: '/home', disable: false },
             { text: '支出管理', icon: 'a_note', url: '/home', disable: false },
         ], [
-            { text: '商品管理', icon: 'sales_management', url: '/product/category-list', disable: false },
+            { text: '商品分类', icon: 'sales_management', url: '/product/category-list', disable: false },
             { text: '会员管理', icon: 'user_management', url: '/home', disable: false },
             { text: '查询销售', icon: 'shop_management', url: '/home', disable: false },
             { text: '智能分析', icon: 'analysis', url: '/home', disable: false },
         ], [
+            { text: '商品管理', icon: 'sales_management', url: '/product-list', disable: false },
             { text: '供应商管理', icon: 'gongying_more', url: '/home', disable: false },
             { text: '挂单', icon: 'guandan_more', url: '/home', disable: false },
             { text: '高级功能', icon: 'image_addsales', url: '/home', disable: false },
