@@ -20,6 +20,7 @@ export class SignupPage implements OnInit {
     submited: boolean; // phone submit
     validateCode: string;
     pwStateTips: string;
+    validateTip: '请输入验证码';
 
     signup: Signup = {
         phone: '',
@@ -101,6 +102,7 @@ export class SignupPage implements OnInit {
     async getCode() {
         this.verifyCode.code = this.authenticationCodeService.createCode(4, 10);
         console.log('code:' + this.verifyCode.code);
+        this.validateTip = this.verifyCode.code;
         // 发送验证码成功后开始倒计时
         this.verifyCode.disable = false;
         this.settime();

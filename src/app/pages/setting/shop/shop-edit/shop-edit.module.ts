@@ -13,7 +13,7 @@ import { ShopEditPage } from './shop-edit.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    ShopEditPageRoutingModule
+    ShopEditPageRoutingModule,
   ],
   declarations: [ShopEditPage]
 })

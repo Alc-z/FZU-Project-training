@@ -1,10 +1,9 @@
+import { PageData } from './../../shared/class/page-data';
 import { AjaxResult } from './../../shared/class/ajax-result';
 import { Injectable } from '@angular/core';
-import { AjaxResult } from 'src/app/shared/class/ajax-result';
 import { LocalStorageService } from 'src/app/shared/services/local-storage.service';
 import { Product } from './product';
 import { UUID } from 'angular2-uuid';
-import { exception } from 'console';
 
 export const PRODUCT_KEY = 'Product';
 @Injectable({
@@ -30,7 +29,7 @@ export class ProductService {
     };
   }
 
-  async getList(index: number, size: number): Promise<Product[]> {
+  async getList(index: number, size: number): Promise<AjaxResult> {
     if (index < 0) {
       throw new Error('分页索引小于0');
     }
@@ -42,10 +41,7 @@ export class ProductService {
     // 取product
     const products: Product[] = this.localStorageService.get(PRODUCT_KEY, []);
     const res = products.slice(index * size, (index + 1) * size);
-    const data = {
-      total: products,
-      list: res
-    };
+    const data: PageData = new PageData(products.length, res);
     return new AjaxResult(true, data);
   }
 

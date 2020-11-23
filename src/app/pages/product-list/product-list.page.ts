@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { ProductService } from './../product/product.service';
 import { AjaxResult } from './../../shared/class/ajax-result';
 import { Product } from './../product/product';
@@ -20,6 +21,7 @@ export class ProductListPage implements OnInit {
     private loadingController: LoadingController,
     private productService: ProductService,
     private toastController: ToastController,
+    private router: Router,
   ) { }
 
   async ngOnInit() {
@@ -80,6 +82,10 @@ export class ProductListPage implements OnInit {
 
   async onInput(event: any) {
     this.queryTerm;
+  }
+
+  gotoPage(str: string) {
+    this.router.navigateByUrl(str);
   }
 
 }

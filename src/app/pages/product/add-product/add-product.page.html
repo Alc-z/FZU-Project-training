@@ -1,13 +1,13 @@
 <ion-header>
-    <ion-toolbar color="primary">
-        <ion-buttons slot="start">
-            <ion-button color="" (click)="gotoPage('/home')">
-                <ion-icon name="arrow-back"></ion-icon>返回
-            </ion-button>
-        </ion-buttons>
-        <ion-title>新增商品<ion-icon name="help-circle" class="icon1"></ion-icon>
-        </ion-title>
-    </ion-toolbar>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-button color="" (click)="gotoPage('/home')">
+        <ion-icon name="arrow-back"></ion-icon>返回
+      </ion-button>
+    </ion-buttons>
+    <ion-title>新增商品<ion-icon name="help-circle" class="icon1"></ion-icon>
+    </ion-title>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content non-padding>
@@ -23,6 +23,8 @@
         </ion-thumbnail>
         <ion-note slot="end" class="note2" color="dark" style="font-size: inherit;">上传图片</ion-note>
       </ion-item-divider>
+
+      <!-- <ion-text>{{text}}</ion-text> -->
 
       <ion-item>
         <ion-label position="fixed">条码</ion-label>
@@ -84,23 +86,21 @@
 
 
 <ion-footer class="ion-no-border">
-    <ion-toolbar color="syzj" class="ion-no-padding">
-        <ion-row class="ion-no-padding">
+  <ion-toolbar color="syzj" class="ion-no-padding">
+    <ion-row class="ion-no-padding">
 
-            <ion-col class="ion-no-padding">
-                <ion-button expand="full" color="syzj"  (click)="onSave(false)"
-                    [disabled]="productForm.invalid">
-                    保存
-                </ion-button>
-            </ion-col>
+      <ion-col class="ion-no-padding">
+        <ion-button expand="full" color="syzj" (click)="onSave(false)" [disabled]="productForm.invalid">
+          保存
+        </ion-button>
+      </ion-col>
 
-            <ion-col class="ion-no-padding">
-                <ion-button expand="full" color="syzj"  (click)="onSave(true)"
-                    [disabled]="productForm.invalid">
-                    继续添加
-                </ion-button>
-            </ion-col>
+      <ion-col class="ion-no-padding">
+        <ion-button expand="full" color="syzj" (click)="onSave(true)" [disabled]="productForm.invalid">
+          继续添加
+        </ion-button>
+      </ion-col>
 
-        </ion-row>
-    </ion-toolbar>
+    </ion-row>
+  </ion-toolbar>
 </ion-footer>

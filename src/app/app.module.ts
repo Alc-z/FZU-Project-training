@@ -11,6 +11,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { Camera } from '@ionic-native/camera/ngx';
 // ngx angular版本
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
+import { ImagePicker } from '@ionic-native/image-picker/ngx';
+
 
 
 @NgModule({
@@ -23,6 +25,7 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
   ],
   providers: [
     Camera,
+    ImagePicker,
     StatusBar,
     BarcodeScanner,
     SplashScreen,

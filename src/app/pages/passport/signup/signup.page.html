@@ -79,7 +79,7 @@
             <form class="full-width">
                 <ion-list>
                     <ion-item>
-                        <ion-input required slot="start" type="string" placeholder="输入验证码" [(ngModel)]="signup.code"
+                        <ion-input required slot="start" type="string" placeholder="{{validateTip}}" [(ngModel)]="signup.code"
                             name="code" #code="ngModel"></ion-input>
                         <ion-button color="primary" expand="full" slot="end" (click)="getCode()" name="getValidateCode"
                             [disabled]="!verifyCode.disable">{{verifyCode.verifyCodeTips}}</ion-button>
@@ -145,7 +145,7 @@
                     </ion-input>
                     <ion-text class="ion-text-left" color="danger" *ngIf="(password.invalid && password.touched)">
                         <p [hidden]="!password.errors?.required" class="padding-start">请输入登入密码</p>
-                        <p [hidden]="!password.errors?.pattern" class="padding-start">密码格式错误</p>
+                        <p [hidden]="!password.errors?.pattern" class="padding-start">密码格式错误,字母数字特殊符号（!@#$%^&*_=+-）</p>
                     </ion-text>
                 </ion-item>
 

@@ -7,6 +7,7 @@ import { Subscription } from 'rxjs';
 import { CategoryService } from '../category/category.service';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
+import { ImagePicker, ImagePickerOptions } from '@ionic-native/image-picker/ngx';
 
 @Component({
     selector: 'app-add-product',
@@ -17,19 +18,26 @@ export class AddProductPage implements OnInit, OnDestroy {
 
     product: Product;
     subscription: Subscription;
+    text: string;
 
     cameraOpt: CameraOptions = {
-        quality: 100,
+        quality: 50,
         destinationType: this.camera.DestinationType.DATA_URL,
         encodingType: this.camera.EncodingType.JPEG,
         mediaType: this.camera.MediaType.PICTURE
     };
 
+    // imagePickerOpt: ImagePickerOptions = {
+    //     quality: 50,
+    //     maximumImagesCount: 3,
+    //     outputType: 1,
+    // };
+
     private imagePickerOpt = {
         quality: 50,
-        destinationType: this.camera.DestinationType.DATA_URL,
-        enodingType: this.camera.EncodingType.JPEG,
-        mediaType: this.camera.MediaType.PICTURE,
+        destinationType: 0,
+        enodingType: 0,
+        mediaType: 0,
         sourceType: 0
     };
 
@@ -42,6 +50,7 @@ export class AddProductPage implements OnInit, OnDestroy {
         private camera: Camera,
         private barcodeScanner: BarcodeScanner,
         private actionSheetCtrl: ActionSheetController,
+        private imagePicker: ImagePicker,
     ) {
         this.initProduct();
         this.subscription = categoryService.watchCategory().subscribe(
@@ -76,10 +85,6 @@ export class AddProductPage implements OnInit, OnDestroy {
     }
 
     async onSave(ct: boolean = false) {
-        if (this.product.images.length <= 0) {
-            
-        }
-
         this.productService.insert(this.product).then(async (data) => {
             if (data.success) {
                 const alert = await this.alertCtrl.create({
@@ -113,13 +118,11 @@ export class AddProductPage implements OnInit, OnDestroy {
                     text: '拍照',
                     role: 'destructive',
                     handler: () => {
-                        console.log('进入相机');
                         this.onCamera();
                     }
                 }, {
                     text: '相册',
                     handler: () => {
-                        console.log('进入相册');
                         this.onImagePicker();
                     }
                 }, {
@@ -134,8 +137,9 @@ export class AddProductPage implements OnInit, OnDestroy {
         await actionSheet.present();
     }
 
-    onCamera() {
+    private onCamera() {
         this.camera.getPicture(this.cameraOpt).then((imageData) => {
+            this.text = imageData;
             const base64Image = 'data:image/jpeg;base64,' + imageData;
             this.product.images.push(base64Image);
         }, (err) => {
@@ -143,13 +147,22 @@ export class AddProductPage implements OnInit, OnDestroy {
         });
     }
 
-    onImagePicker() {
-        this.camera.getPicture(this.imagePickerOpt).then((results) => {
-            for (const res of results) {
-                const base64Image = 'data:image/jpeg;base64,' + res;
-                console.log('Image URI: ' + res);
-                this.product.images.push(base64Image);
-            }
+    // private onImagePicker() {
+    //     this.imagePicker.getPictures(this.imagePickerOpt).then((results) => {
+    //         this.text = results.toString();
+    //         for (let i = 0; i < results.length; i++) {
+    //             const base64Image = 'data:image/jpeg;base64,' + results[i];
+    //             this.product.images.push(base64Image);
+    //         }
+    //     }, (err) => {
+    //         console.log('ERROR:' + err);
+    //     });
+    // }
+
+    private onImagePicker() {
+        this.camera.getPicture(this.imagePickerOpt).then((imageData) => {
+            const base64Image = 'data:image/jpeg;base64,' + imageData;
+            this.product.images.push(base64Image);
         }, (err) => {
             console.log('ERROR:' + err);
         });
@@ -159,7 +172,7 @@ export class AddProductPage implements OnInit, OnDestroy {
         this.subscription.unsubscribe();
     }
 
-    gotoPage(str: string): void {
+    gotoPage(str: string) {
         this.router.navigateByUrl(str);
     }
 
