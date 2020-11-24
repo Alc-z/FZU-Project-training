@@ -186,7 +186,6 @@ export class AddProductPage implements OnInit, OnDestroy {
 
     onScan() {
         this.barcodeScanner.scan().then(barcodeData => {
-            console.log('Barcode data', barcodeData);
             this.product.barcode = barcodeData.text;
         }).catch(err => {
             console.log('Error', err);

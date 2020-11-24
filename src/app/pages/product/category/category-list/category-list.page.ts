@@ -1,3 +1,4 @@
+import { ProductService } from './../../product.service';
 import { Category } from './../category';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
@@ -20,6 +21,7 @@ export class CategoryListPage implements OnInit {
 
     constructor(
         private categoryService: CategoryService,
+        private productService: ProductService,
         private actionSheetCtrl: ActionSheetController,
         private router: Router,
         private activatedRouter: ActivatedRoute,
@@ -87,8 +89,12 @@ export class CategoryListPage implements OnInit {
     }
 
     onSelectSubCategory(category: Category) {
-        if (this.tab === 'FromProductAdd') {
+        if (this.tab === 'FromProductAdd' ) {
             this.categoryService.setActiveCategory(category);
+            this.location.back();
+        }
+        if (this.tab === 'FromProductList') {
+            this.productService.setActiveCategory(category);
             this.location.back();
         }
     }

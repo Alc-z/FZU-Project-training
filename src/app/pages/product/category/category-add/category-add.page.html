@@ -11,27 +11,27 @@
   <form>
     <ion-list>
 
-      <ion-item-divider color="ion-color-light">
+      <ion-item color="light">
         <label>{{categoryName}}</label>
 
         <div *ngIf="categoryName == '大分类'" slot="end">
           <ion-input name="{{categoryName}}" [(ngModel)]="newCategoryName" type="text" required placeholder="商品大分类名称">
           </ion-input>
         </div>
-      </ion-item-divider>
+      </ion-item>
 
-      <ion-item-divider *ngFor="let c of category.children" color="ion-color-light">
+      <ion-item *ngFor="let c of category.children" color="light">
         <label>小分类</label>
         <div slot="end">
           <ion-input name="subCategory" [(ngModel)]="c.name" type="text" required placeholder="商品小分类名称"></ion-input>
         </div>
-      </ion-item-divider>
+      </ion-item>
 
-      <ion-item-divider color="ion-color-light">
+      <ion-item color="light" lines="none">
         <ion-text color="primary" (click)="onAddSubCategory()">
           <ion-icon name="add-circle"></ion-icon>新增小分类
         </ion-text>
-      </ion-item-divider>
+      </ion-item>
 
     </ion-list>
     <div class="ion-padding-horizontal">

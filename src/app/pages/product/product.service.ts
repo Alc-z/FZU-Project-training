@@ -4,6 +4,9 @@ import { Injectable } from '@angular/core';
 import { LocalStorageService } from 'src/app/shared/services/local-storage.service';
 import { Product } from './product';
 import { UUID } from 'angular2-uuid';
+import { ActiveCategory } from './category/active-category';
+import { Subject } from 'rxjs';
+import { Observable } from 'rxjs/internal/Observable';
 
 export const PRODUCT_KEY = 'Product';
 @Injectable({
@@ -11,6 +14,7 @@ export const PRODUCT_KEY = 'Product';
 })
 export class ProductService {
 
+  categorySubject = new Subject<ActiveCategory>();
   constructor(
     private localStorageService: LocalStorageService,
   ) { }
@@ -38,7 +42,6 @@ export class ProductService {
       throw new Error('每页显示的记录数小于0');
     }
 
-    // 取product
     const products: Product[] = this.localStorageService.get(PRODUCT_KEY, []);
     const res = products.slice(index * size, (index + 1) * size);
     const data: PageData = new PageData(products.length, res);
@@ -46,11 +49,35 @@ export class ProductService {
   }
 
 
-  getListByCategoryId(index: number, size: number, categoryId: number): Promise<AjaxResult> {
-    return null;
+  async getListByCategoryId(index: number, size: number, categoryId: number): Promise<AjaxResult> {
+    if (index < 0) {
+      throw new Error('分页索引小于0');
+    }
+
+    if (size <= 0) {
+      throw new Error('每页显示的记录数小于0');
+    }
+    const products: Product[] = this.localStorageService.get(PRODUCT_KEY, []);
+    const productList: Product[] = [];
+    for (const p of products) {
+      if (p.categoryId === categoryId) {
+        productList.push(p);
+      }
+    }
+    const res = productList.slice(index * size, (index + 1) * size);
+    const data: PageData = new PageData(productList.length, res);
+    return new AjaxResult(true, data);
   }
 
   getListByCondition(searchProductInput) {
 
+  }
+
+  setActiveCategory(activeCategory: ActiveCategory) {
+    this.categorySubject.next(activeCategory);
+  }
+
+  watchCategory(): Observable<ActiveCategory> {
+    return this.categorySubject.asObservable();
   }
 }

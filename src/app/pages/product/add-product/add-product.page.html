@@ -24,8 +24,6 @@
         <ion-note slot="end" class="note2" color="dark" style="font-size: inherit;">上传图片</ion-note>
       </ion-item-divider>
 
-      <!-- <ion-text>{{text}}</ion-text> -->
-
       <ion-item>
         <ion-label position="fixed">条码</ion-label>
         <ion-input name="barCode" placeholder="输入商品条码" [(ngModel)]="product.barcode" #barCode="ngModel"></ion-input>
@@ -34,7 +32,7 @@
         </div>
       </ion-item>
 
-      <ion-item detail>
+      <ion-item>
         <ion-label position="fixed">名称<ion-text color="danger">*</ion-text>
         </ion-label>
         <ion-input name="name" required type="text" [(ngModel)]="product.name" #name="ngModel"

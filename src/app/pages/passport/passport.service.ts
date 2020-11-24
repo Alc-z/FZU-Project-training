@@ -115,7 +115,7 @@ export class PassportService {
         const loginLogDto: LoginLog[] = this.localStorageService.get(T_LOGIN_LOG, []);
         loginLogDto.push(loginLog);
         if (loginLogDto.length > 10) {
-            loginLogDto.pop();
+            loginLogDto.shift();
         }
         this.localStorageService.set(T_LOGIN_LOG, loginLogDto);
     }
@@ -162,6 +162,8 @@ export class PassportService {
             input.date = new Date(+new Date() + 8 * 3600 * 1000).toISOString().replace(/T/g, ' ').replace(/\.[\d]{3}Z/, '');
             input.password = ''; // 日志清楚用户输入的密码
             this.addLoginLog(input);
+
+            console.log('登入时间', input.date);
             return new AjaxResult(true, null);
         }
         return new AjaxResult(false, null, { message: '用户密码不正确', details: '' });
