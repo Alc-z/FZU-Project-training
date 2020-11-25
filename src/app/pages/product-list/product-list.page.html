@@ -6,15 +6,18 @@
         <ion-button color="" (click)="gotoPage('/home')" slot="start">
           <ion-icon name="arrow-back"></ion-icon>返回
         </ion-button>
-        <ion-title (click)="onReset()">商品列表(点击重置)</ion-title>
+        <ion-title>商品列表</ion-title>
+        <ion-button (click)="onReset()" slot="end">
+          <ion-icon name="refresh"></ion-icon>
+        </ion-button>
         <ion-button (click)="gotoCategyList()" slot="end">分类</ion-button>
       </ion-toolbar>
     </ion-item>
 
     <ion-item class="ion-no-padding" lines="none">
       <ion-toolbar color="light">
-        <ion-searchbar placeholder="请输入商品名称、拼音、数字" [(ngModel)]="queryTerm" showCancelButton="false"
-          (ionInput)="onInput($event)" showCancelButton="never" slot="start">
+        <ion-searchbar placeholder="请输入商品名称" [(ngModel)]="queryTerm" (ionBlur)="onInput($event)"
+          showCancelButton="never" slot="start">
         </ion-searchbar>
 
         <ion-buttons slot="end">

@@ -1,4 +1,3 @@
-import { async } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { ProductService } from './../product/product.service';
 import { AjaxResult } from './../../shared/class/ajax-result';
@@ -6,6 +5,7 @@ import { Product } from './../product/product';
 import { Component, OnInit } from '@angular/core';
 import { LoadingController, ToastController } from '@ionic/angular';
 import { timer, Subscription } from 'rxjs';
+import { PageData } from 'src/app/shared/class/page-data';
 
 @Component({
   selector: 'app-product-list',
@@ -37,6 +37,7 @@ export class ProductListPage implements OnInit {
         console.log(error);
       }
     );
+
   }
 
   async ngOnInit() {
@@ -51,6 +52,7 @@ export class ProductListPage implements OnInit {
     this.load(() => {
       loading.dismiss();
     }, 1);
+
   }
 
   async onReset() {
@@ -65,6 +67,7 @@ export class ProductListPage implements OnInit {
     this.load(() => {
       loading.dismiss();
     }, 1);
+
   }
 
   /**
@@ -121,21 +124,18 @@ export class ProductListPage implements OnInit {
       this.load(() => {
         event.target.complete();
       }, 0);
-      // try {
-      //   const result: AjaxResult = await this.productService.getList(this.currentIndex, 8);
-      //   const timerSubscription: Subscription = timer(1000).subscribe(() => {
-      //     event.target.complete();
-      //     this.total = result.data.total;
-      //     this.products = this.products.concat(result.data.list);
-      //   });
-      // } catch (error) {
-      //   console.log(error);
-      // }
     }
   }
 
-  async onInput(event: any) {
-    this.queryTerm;
+  onInput() {
+    const data: PageData = this.productService.getListByCondition(this.currentIndex, 8, this.queryTerm);
+    this.total = data.total;
+    this.products = data.list;
+    this.getTotalCostAndTotalInventory(this.products);
+    const timerSubscription: Subscription = timer(500).subscribe(() => {
+
+    });
+
   }
 
   gotoCategyList() {

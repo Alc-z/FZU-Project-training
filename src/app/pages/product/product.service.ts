@@ -7,6 +7,7 @@ import { UUID } from 'angular2-uuid';
 import { ActiveCategory } from './category/active-category';
 import { Subject } from 'rxjs';
 import { Observable } from 'rxjs/internal/Observable';
+import { PRODUCTS } from './mock.products';
 
 export const PRODUCT_KEY = 'Product';
 @Injectable({
@@ -42,7 +43,7 @@ export class ProductService {
       throw new Error('每页显示的记录数小于0');
     }
 
-    const products: Product[] = this.localStorageService.get(PRODUCT_KEY, []);
+    const products: Product[] = this.localStorageService.get(PRODUCT_KEY, PRODUCTS);
     const res = products.slice(index * size, (index + 1) * size);
     const data: PageData = new PageData(products.length, res);
     return new AjaxResult(true, data);
@@ -57,7 +58,7 @@ export class ProductService {
     if (size <= 0) {
       throw new Error('每页显示的记录数小于0');
     }
-    const products: Product[] = this.localStorageService.get(PRODUCT_KEY, []);
+    const products: Product[] = this.localStorageService.get(PRODUCT_KEY, PRODUCTS);
     const productList: Product[] = [];
     for (const p of products) {
       if (p.categoryId === categoryId) {
@@ -69,8 +70,18 @@ export class ProductService {
     return new AjaxResult(true, data);
   }
 
-  getListByCondition(searchProductInput) {
-
+  getListByCondition(index: number, size: number, query: string): PageData {
+    const regex = new RegExp(query);
+    const pList: Product[] = [];
+    const products: Product[] = this.localStorageService.get(PRODUCT_KEY, PRODUCTS);
+    products.forEach(product => {
+      if (product.name.match(regex)) {
+        pList.push(product);
+      }
+    });
+    const res = pList.slice(index * size, (index + 1) * size);
+    const data: PageData = new PageData(pList.length, res);
+    return data;
   }
 
   setActiveCategory(activeCategory: ActiveCategory) {
